@@ -1,6 +1,6 @@
-import { data } from 'autoprefixer';
 import axios from 'axios';
-import {createStore, storeKey} from 'vuex';
+import { createStore } from 'vuex';
+import useNotLoginedRedirect from './composables/certification/useNotLoginedRedirect.js';
 
 export default createStore({
     state:{
@@ -53,6 +53,7 @@ export default createStore({
           .catch((err) => {
             // ログイン状態取得
             state.isLogined = false;
+	    useNotLoginedRedirect(err);
           })
         },
 
@@ -64,6 +65,7 @@ export default createStore({
           })
           .catch((err) => {
             // ログインしていない状態だとホーム画面へリダイレクト
+            useNotLoginedRedirect(err);
           })
         },
 
@@ -74,7 +76,7 @@ export default createStore({
             state.latestRecordMenus = res.data.latestRecord
           })
           .catch((err) => {
-            console.log(err)
+            useNotLoginedRedirect(err);
           })
         }
     }

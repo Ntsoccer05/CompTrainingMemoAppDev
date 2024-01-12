@@ -13,7 +13,7 @@ export default {
     onMounted(() => {
       axios.get("/sanctum/csrf-cookie").then(() => {
         axios
-          .post(`${import.meta.env.VITE_APP_API_LOGIN_URL}/google/callback`, {
+          .post('/api/login/google/callback', {
             // GoogleのURIで登録する場合以下２つ必須
             code: route.query.code,
             state: route.query.code,

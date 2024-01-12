@@ -204,7 +204,7 @@ export default {
             store.commit("LogoutState");
             //ページ再読み込み
             alert("ログアウトしました。");
-            window.location.reload();
+            holdLoginState();
           }
         })
         .catch((err) => {

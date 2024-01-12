@@ -19,7 +19,6 @@ export default function useGetSecondRecordContent(user_id, category_id, menu_id,
                 recorded_at,
             }
         }).then((res) =>{
-            console.log(res.data)
             if(res.data.secondRecords){
                 secondRecord.value = res.data.secondRecords
                 hasSecondRecord.value = true

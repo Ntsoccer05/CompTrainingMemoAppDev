@@ -270,7 +270,8 @@ export default {
                 .post("/api/record/destroy", {
                   recorded_at: recorded_day,
                 })
-                .then((res) => {});
+                .then((res) => {})
+                .catch(() => {});
             })();
           } else {
             break;

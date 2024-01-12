@@ -5,7 +5,7 @@
         <label for="addPart" class="text-bold mt-3 justify-self-end block sm:inline"
           >追加する部位を記入してください：</label
         >
-        <div class="addPart grid grid-cols-3">
+        <div class="addPart md:grid md:grid-cols-3">
           <input
             class="bg-slate-100 border-black border-x border-y mt-3 justify-self-start self-start"
             id="addPart"

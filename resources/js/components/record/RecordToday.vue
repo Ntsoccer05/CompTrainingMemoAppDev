@@ -49,7 +49,6 @@ export default {
             recording_day: postDay,
           })
           .then((res) => {
-            console.log(res);
             store.commit("setRecordedAt", postDay);
             router.push({ name: "selectMenu", params: { recordId: postDay } });
           })

@@ -1,5 +1,6 @@
 import { ref } from "vue";
 import axios from "axios";
+import useNotLoginedRedirect from "../certification/useNotLoginedRedirect";
 
 export default function useGetRecords(){
     const records = ref("");
@@ -16,6 +17,8 @@ export default function useGetRecords(){
         }).then((res) =>{
             records.value = res.data.records
             compGetData.value = true
+	}).catch((err)=>{
+            useNotLoginedRedirect(err);
         })
     }
 

@@ -35,7 +35,7 @@ export default {
     const toGoogleLoginPage = () => {
       // api.webにてroute指定しているため「api/」が必要
       axios
-        .get(`${import.meta.env.VITE_APP_API_LOGIN_URL}/google`)
+        .get(`/api/login/google`)
         .then((res) => {
           // tokenなどがランダムなため直接指定で遷移
           window.location.href = res.data.redirectUrl;

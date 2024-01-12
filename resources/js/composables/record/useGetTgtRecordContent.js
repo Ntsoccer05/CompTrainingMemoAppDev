@@ -1,5 +1,6 @@
 import { ref } from "vue";
 import axios from "axios";
+import useNotLoginedRedirect from "../certification/useNotLoginedRedirect";
 
 export default function useGetTgtRecordContents(user_id, category_id, menu_id, record_state_id){
     const tgtRecord = ref("")
@@ -25,7 +26,7 @@ export default function useGetTgtRecordContents(user_id, category_id, menu_id, r
                 hasTgtRecord.value = false
             }
         }).catch((err)=>{
-            console.log(err)
+            useNotLoginedRedirect(err);
         })
     }
 

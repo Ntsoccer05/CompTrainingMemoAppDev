@@ -17,10 +17,11 @@ export default defineConfig({
       },
     }),
   ],
+  envDir: '../',	
   server: {
     host: true,
     hmr: {
-      host: 'localhost'
+      host: 'ec2-54-65-130-29.ap-northeast-1.compute.amazonaws.com'
     },
     // ホットリロード設定
     watch: {

@@ -1,5 +1,7 @@
 import { ref,nextTick } from "vue";
 import { useStore } from "vuex";
+import { useRouter } from 'vue-router'
+import useNotLoginedRedirect from "./useNotLoginedRedirect";
 
 export default function useHoldLoginState(){
     const store = useStore();
@@ -15,8 +17,7 @@ export default function useHoldLoginState(){
             isLogined.value = true;
           })
           .catch((err) => {
-            // ログイン状態取得
-            isLogined.value = false;
+            useNotLoginedRedirect(err)
           })
         // nextTickは非同期処理完了後に呼び出されるのでisLoginedを取得できる
         nextTick(()=>{
