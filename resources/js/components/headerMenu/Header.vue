@@ -99,6 +99,13 @@
             </template>
             <template v-if="isLogined === true && isloaded">
               <li class="border-b md:border-none">
+                <router-link
+                  class="block px-8 py-2 my-4 hover:bg-gray-600 rounded cursor-pointer"
+                  to="/recordRanking"
+                  >メニュー別最高記録</router-link
+                >
+              </li>
+              <li class="border-b md:border-none">
                 <a
                   class="block px-8 py-2 my-4 hover:bg-gray-600 rounded cursor-pointer"
                   @click.native="logout"

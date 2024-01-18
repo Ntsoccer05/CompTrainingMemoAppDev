@@ -3,6 +3,7 @@ import axios from "axios";
 
 export default function useGetSecondRecordContent(user_id, category_id, menu_id, record_state_id, recorded_at){
     const secondRecord = ref("")
+    const secondRecordState = ref("")
     // ２番目に新しい記録が存在するか
     const hasSecondRecord = ref(false)
 
@@ -21,6 +22,7 @@ export default function useGetSecondRecordContent(user_id, category_id, menu_id,
         }).then((res) =>{
             if(res.data.secondRecords){
                 secondRecord.value = res.data.secondRecords
+		secondRecordState.value = res.data.secondRecordState.record_state
                 hasSecondRecord.value = true
             }else{
                 hasSecondRecord.value = false
@@ -28,5 +30,5 @@ export default function useGetSecondRecordContent(user_id, category_id, menu_id,
         })
     }
 
-    return{secondRecord, hasSecondRecord, getSecondRecord}
+    return{secondRecord, secondRecordState, hasSecondRecord, getSecondRecord}
 }

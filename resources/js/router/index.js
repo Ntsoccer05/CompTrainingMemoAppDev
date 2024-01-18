@@ -11,6 +11,7 @@ import AddMenu from '../views/menu/addMenu.vue';
 import PasswordForget from '../views/certification/passwordForget.vue';
 import ResetPassword from '../views/certification/resetPassword.vue';
 import Inquiry from '../views/inquiry/inquiry.vue';
+import UserRecordRanking from '../views/ranking/userRecordRanking.vue';
 
 const routes = [
   {
@@ -98,6 +99,13 @@ const routes = [
     path: '/addMenu/:recordId?',
     name: 'addMenu',
     component: AddMenu,
+    // ログインの必要あり
+    meta: { requiresAuth: true },
+  },
+  {
+    path: '/recordRanking',
+    name: 'userRecordRanking',
+    component: UserRecordRanking,
     // ログインの必要あり
     meta: { requiresAuth: true },
   },

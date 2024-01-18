@@ -22,9 +22,9 @@ class RecordMng extends Command
      *
      * @var string
      */
-    protected $description = '重量もしくは体重にデータがないものは１日おきに削除する。';
+    protected $description = '２年経過したデータは削除する。';
 
-    private $day_hour = 24;
+    private $diff_month = 24;
 
     /**
      * Execute the console command.
@@ -40,21 +40,21 @@ class RecordMng extends Command
             if(isset($record->updated_at)){
                 $updateTime = new Carbon($record->updated_at);
                 // 他で定義しているものを使用する場合は'$this->'が必要
-                //記録開始して１日経ったら
-                if($now->diffInHours($updateTime) >= $this->day_hour){
+                //記録開始して２年経ったら
+                if($now->diffInMonths($updateTime) >= $this->diff_month){
                     $delete_flg = 1;
                 }
             }else{
                 $createTime = new Carbon($record->created_at);
                 // 他で定義しているものを使用する場合は'$this->'が必要
-                //記録開始して１日経ったら
-                if($now->diffInHours($createTime) >= $this->day_hour){
+                //記録開始して２年経ったら
+                if($now->diffInMonths($createTime) >= $this->diff_month){
                     $delete_flg = 1;
                 }
             }
             if($delete_flg === 1){
-                // １日経過し重さを記録されていない記録は削除する
-                $this->deleteRec($record);
+                // ２年経過し重さを記録されていない記録は削除する
+                $record->delete();
             }
         }
 

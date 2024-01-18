@@ -33,6 +33,6 @@ class RecordContent extends Model
     }
     public function recordMenu():BelongsTo
     {
-        return $this->belongsTo(RecordState::class);
+        return $this->belongsTo(RecordMenu::class);
     }
 }

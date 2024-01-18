@@ -38,7 +38,7 @@
       </div>
     </div>
     <div class="mx-auto w-11/12 mt-5 mb-5">
-      <label for="weight block sm:inline"> 今日の体重：</label>
+      <label for="weight block sm:inline"> 体重：</label>
       <input
         class="border border-black text-right w-28"
         name="weight"
@@ -226,9 +226,6 @@ export default {
       // 数字または小数点以外を無効とする
       val = val.replace(/[^0-9|.]/g, "");
       // val = val.replace(/\D/g, "");
-      if (decPoint !== -1) {
-        val = val / 10 ** (decPoint + 1);
-      }
       // parseFloatで整数型へ変換している
       if (val !== "") {
         val = parseFloat(val);

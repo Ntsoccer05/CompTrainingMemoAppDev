@@ -11,7 +11,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr v-for="(content, index) in contents" :key="index">
+      <tr v-for="index in maxSet" :key="index">
         <td>
           <div class="bg-gray-200 border indent-1">{{ index + 1 }}セット目</div>
           <div :class="hasOneHand ? 'hidden' : 'block'">
@@ -87,7 +87,7 @@
         </td>
         <td>
           <div class="bg-gray-200 border indent-1">{{ index + 1 }}セット目</div>
-          <template v-if="content.set">
+          <template v-if="contents[index].set">
             <div :class="hasOneHand ? 'hidden' : 'block'">
               <!-- readonlyだとfocusできるが、disabledだとfocusもできない -->
               <!-- inputのvalue値にデータを入力するにはv-bindを用いる -->
@@ -95,14 +95,14 @@
                 class="border w-full"
                 type="text"
                 placeholder="重さ(kg)"
-                :value="content.weight"
+                :value="contents[index].weight"
                 disabled
               />
               <input
                 class="border w-full"
                 type="text"
                 placeholder="回数"
-                :value="content.rep"
+                :value="contents[index].rep"
                 disabled
               />
             </div>
@@ -111,28 +111,28 @@
                 class="border w-full"
                 type="text"
                 placeholder="重さ（右）(kg)"
-                :value="content.right_weight"
+                :value="contents[index].right_weight"
                 disabled
               />
               <input
                 class="border w-full"
                 type="text"
                 placeholder="回数（右）"
-                :value="content.right_rep"
+                :value="contents[index].right_rep"
                 disabled
               />
               <input
                 class="border w-full"
                 type="text"
                 placeholder="重さ（左）(kg)"
-                :value="content.left_weight"
+                :value="contents[index].left_weight"
                 disabled
               />
               <input
                 class="border w-full"
                 type="text"
                 placeholder="回数（左）"
-                :value="content.left_rep"
+                :value="contents[index].left_rep"
                 disabled
               />
             </div>
@@ -144,7 +144,7 @@
                 cols="20"
                 rows="4"
                 placeholder="メモ"
-                :value="content.memo"
+                :value="contents[index].memo"
                 disabled
               ></textarea>
             </div>
@@ -272,8 +272,14 @@ export default {
     const memo = ref([]);
     const doRecord = ref(false);
     const doDelete = ref(false);
+    //配列作成
+　　const maxSet = Array(10)
+      .fill(0)
+      .map((_, i) => i);
 
     const maxBeforeLength = ref("");
+
+    const canClickFillBefore = ref(false);
 
     // メニューはセレクトボックス、休憩時間はタイムピッカー
     const header = {
@@ -293,6 +299,11 @@ export default {
     const { tgtRecord, hasTgtRecord, getTgtRecords } = useGetTgtRecordContent();
 
     const contents = ref([
+      { set: 0, menu: "", weight: 0, rep: 0, rest: 0 },
+      { set: 0, menu: "", weight: 0, rep: 0, rest: 0 },
+      { set: 0, menu: "", weight: 0, rep: 0, rest: 0 },
+      { set: 0, menu: "", weight: 0, rep: 0, rest: 0 },
+      { set: 0, menu: "", weight: 0, rep: 0, rest: 0 },
       { set: 0, menu: "", weight: 0, rep: 0, rest: 0 },
       { set: 0, menu: "", weight: 0, rep: 0, rest: 0 },
       { set: 0, menu: "", weight: 0, rep: 0, rest: 0 },
@@ -341,9 +352,6 @@ export default {
       // 数字または小数点以外を無効とする
       val = val.replace(/[^0-9|.]/g, "");
       // val = val.replace(/\D/g, "");
-      if (decPoint !== -1) {
-        val = val / 10 ** (decPoint + 1);
-      }
       // parseFloatで少数型へ変換している
       if (val !== "") {
         val = parseFloat(val);
@@ -388,10 +396,16 @@ export default {
           memo: memo.value[index],
         })
         .then((res) => {
-          console.log(res.data.totalSet);
+	  canClickFillBefore.value = true;
           // 今回の合計セット数
           // emit()で親に値を渡す、第一引数：親側の@～の～の名前、第二引数：親に渡す値
           emit("totalSet", res.data.totalSet);
+	  if (res.data.totalSet > 0) {
+            canClickFillBefore.value = true;
+          } else {
+            canClickFillBefore.value = false;
+          }
+          emit("canClick", canClickFillBefore.value);
         })
         .catch((err) => {
           console.log(err);
@@ -401,6 +415,8 @@ export default {
     //tgtRecordを初期レンダリング時に取得するため、変更を常にwatchする。
     watch(tgtRecord, () => {
       if (hasTgtRecord.value) {
+	canClickFillBefore.value = true;
+        emit("canClick", canClickFillBefore.value);
         //emit()で親に値を渡す、第一引数：親側の@～の～の名前、第二引数：親に渡す値
         emit("totalSet", tgtRecord.value.length);
         tgtRecord.value.forEach((record) => {
@@ -421,6 +437,9 @@ export default {
             }
           }
         });
+      } else {
+        canClickFillBefore.value = false;
+        emit("canClick", canClickFillBefore.value);
       }
     });
 
@@ -446,6 +465,7 @@ export default {
       contents,
       hasOneHand,
       route,
+      maxSet,
       validateNumber,
       validateDecimalNumber,
       postRecordContent,

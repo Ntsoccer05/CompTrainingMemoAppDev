@@ -19,10 +19,10 @@ class RecordMenuController extends Controller
         $secondRecordState = $recordMenu->where(function($query) use($user_id, $category_id, $menu_id, $record_state_id, $recorded_at){
             $query->where([['user_id', $user_id], ['category_id', $category_id], ['menu_id', $menu_id]])->whereDate('recorded_at' ,'<=', $recorded_at);
             // offset(数)←先頭から引数の数だけ飛ばす
-        })->orderBy('recorded_at', 'desc')->offset(1)->first();
+        })->orderBy('recorded_at', 'desc')->offset(1)->first()->load("recordState");
         if($secondRecordState){
             $secondRecords = $secondRecordState->recordContents()->orderBy('set', 'asc')->get();
-            return response()->json(["status_code" => 200, "message" => "２番目に新しい記録を取得します。",'$secondRecordState'=>$secondRecordState, 'secondRecords' => $secondRecords]);
+            return response()->json(["status_code" => 200, "message" => "２番目に新しい記録を取得します。",'secondRecordState'=>$secondRecordState, 'secondRecords' => $secondRecords]);
         }else{
             return response()->json(["status_code" => 200, "message" => "記録が１つしか存在しません。"]);
         }
