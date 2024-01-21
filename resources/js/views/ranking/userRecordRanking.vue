@@ -14,6 +14,11 @@ const {
   getRecords,
 } = useGetRecordRanking();
 
+//前の画面へ戻る
+const toBeforeScreen = () => {
+  history.back();
+};
+
 onMounted(async () => {
   await getLoginUser();
   await getRecords(loginUser.value.id);
@@ -22,6 +27,14 @@ onMounted(async () => {
 
 <template>
   <div>
+    <div class="mx-auto md:w-6/12 w-11/12 mb-5 font-bold md:text-left">
+      <button
+        class="mx-auto mt-10 font-bold md:text-center bg-red-500 text-white w-28 h-8 rounded-md ml-5"
+        @click="toBeforeScreen"
+      >
+        前画面へ戻る
+      </button>
+    </div>
     <p class="mx-auto mt-10 md:w-6/12 w-11/12 mb-5 font-bold md:text-center">
       メニュー別の最高重量、最高ボリュームを表示しています。
     </p>

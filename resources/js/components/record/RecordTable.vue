@@ -1,6 +1,9 @@
 <template>
   <div>
     <thead>
+      <tr class="grid grid-cols-2 w-2full">
+        <th class="mx-auto block w-full col-span-2">{{ menuContent }}</th>
+      </tr>
       <tr>
         <th class="text-left md:text-center indent-1 md:indent-0">
           <div class="border" ref="todayRecordedAt">今回の記録</div>
@@ -23,16 +26,18 @@
               placeholder="重さ(kg)"
               maxlength="6"
               :value="weight[index]"
-              @change="weight[index] = validateDecimalNumber($event.target.value)"
+	      @focus="complementData($event.target.value, weight, index)"
+              @change="validateDecimalNumber($event.target.value, weight, index)"
               @blur="postRecordContent(index)"
             />
             <input
               class="border w-full"
               type="text"
               placeholder="回数"
-              maxlength="6"
+              maxlength="3"
               :value="rep[index]"
-              @change="rep[index] = validateNumber($event.target.value)"
+	      @focus="complementData($event.target.value, rep, index)"
+              @change="validateNumber($event.target.value, rep, index)"
               @blur="postRecordContent(index)"
             />
           </div>
@@ -43,16 +48,18 @@
               placeholder="重さ（右）(kg)"
               maxlength="6"
               :value="rightWeight[index]"
-              @change="rightWeight[index] = validateDecimalNumber($event.target.value)"
+	      @focus="complementData($event.target.value, rightWeight, index)"
+              @change="validateDecimalNumber($event.target.value, rightWeight, index)"
               @blur="postRecordContent(index)"
             />
             <input
               class="border w-full"
               type="text"
               placeholder="回数（右）"
-              maxlength="6"
+              maxlength="3"
               :value="rightRep[index]"
-              @change="rightRep[index] = validateNumber($event.target.value)"
+	      @focus="complementData($event.target.value, rightRep, index)"
+              @change="validateNumber($event.target.value, rightRep, index)"
               @blur="postRecordContent(index)"
             />
             <input
@@ -61,16 +68,18 @@
               placeholder="重さ（左）(kg)"
               maxlength="6"
               :value="leftWeight[index]"
-              @change="leftWeight[index] = validateDecimalNumber($event.target.value)"
+	      @focus="complementData($event.target.value, leftWeight, index)"
+              @change="validateDecimalNumber($event.target.value, leftWeight, index)"
               @blur="postRecordContent(index)"
             />
             <input
               class="border w-full"
               type="text"
               placeholder="回数（左）"
-              maxlength="6"
+              maxlength="3"
               :value="leftRep[index]"
-              @change="leftRep[index] = validateNumber($event.target.value)"
+	      @focus="complementData($event.target.value, leftRep, index)"
+              @change="validateNumber($event.target.value, leftRep, index)"
               @blur="postRecordContent(index)"
             />
           </div>
@@ -258,11 +267,15 @@ export default {
     category_id: String,
     menu_id: String,
     record_state_id: String,
+    menu_content: String,
+    complementContents: Boolean,
   },
   setup(props, { emit }) {
     const route = useRoute();
     const hasOneHand = computed(() => props.hasOneHand);
     const second_record = computed(() => props.second_record);
+    const menuContent = computed(() => props.menu_content);
+    const complementContents = computed(() => props.complementContents);
     const weight = ref([]);
     const rep = ref([]);
     const rightWeight = ref([]);
@@ -343,7 +356,10 @@ export default {
     };
 
     // valはString
-    const validateDecimalNumber = (val) => {
+    const validateDecimalNumber = (val, tgtVal, index) => {
+      // tgtvalの変更がない場合代入してもvalueの値が変化しないため
+      tgtVal[index] = val;
+      val = replaceFullToHalf(val);
       val = replaceFullToHalf(val);
       // 小数点を含むか？
       let oldVal = val;
@@ -360,10 +376,12 @@ export default {
         // matchは型がStringのもののみ適用できる
         val.toString().match(/^(\d+)(\.\d*)?/u) ? val : "";
       }
-      return val;
+      tgtVal[index] = val.toString();
     };
 
-    const validateNumber = (val) => {
+    const validateNumber = (val, tgtVal, index) => {
+      // tgtvalの変更がない場合代入してもvalueの値が変化しないため
+      tgtVal[index] = val;
       val = replaceFullToHalf(val);
       // 数字または小数点以外を無効とする
       val = val.replace(/[^0-9]/g, "");
@@ -375,7 +393,7 @@ export default {
         // matchは型がStringのもののみ適用できる
         val.toString().match(/^(\d+)(\.\d*)?/u) ? val : "";
       }
-      return val;
+      tgtVal[index] = val.toString();
     };
 
     const postRecordContent = (index) => {
@@ -410,6 +428,21 @@ export default {
         .catch((err) => {
           console.log(err);
         });
+    };
+
+    // 重量と回数を自動補完
+　　const complementData = (val, tgtVal, index) => {
+      if (
+        index - 1 > -1 &&
+        complementContents.value &&
+        tgtVal[index - 1] &&
+        (tgtVal[index] == "" || tgtVal[index] == undefined)
+      ) {
+        val = tgtVal[index - 1].toString();
+        tgtVal[index] = tgtVal[index - 1];
+      } else {
+        tgtVal[index];
+      }
     };
 
     //tgtRecordを初期レンダリング時に取得するため、変更を常にwatchする。
@@ -466,9 +499,12 @@ export default {
       hasOneHand,
       route,
       maxSet,
+      menuContent,
+      complementContents,
       validateNumber,
       validateDecimalNumber,
       postRecordContent,
+      complementData,
     };
   },
 };

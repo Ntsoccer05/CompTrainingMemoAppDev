@@ -20,6 +20,15 @@
           >
             ※前回の記録を埋めるためには今回の記録を埋めてください
           </p>
+	  <div class="text-center mt-5">
+            <input
+              class="bg-slate-100 border-black border-x border-y mr-2"
+              id="complementContents"
+              type="checkbox"
+              v-model="complementContents"
+            />
+            <label for="complementContents" class="text-base">重量・回数を補完する</label>
+          </div>
         <div class="grid grid-cols-2 w-full">
           <div>
             <p class="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">
@@ -53,6 +62,8 @@
         :category_id="category_id"
         :menu_id="menu_id"
         :record_state_id="record_state_id"
+	:menu_content="menuContent"
+        :complementContents="complementContents"
         @beforeTotalSet="fillBeforeTodalSet"
         @totalSet="fillThisTodalSet"
         @canClick="ableToClickBefore"
@@ -60,7 +71,7 @@
     </table>
     </template>
     <template v-else>
-      <p class="mx-auto mt-10 md:w-6/12 w-11/12 mb-5 font-bold md:text-center">
+      <p class="mx-auto mt-10 md:w-6/12 w-11/12 mb-5 font-bold text-center">
         データ取得中です。しばらくお待ちください。
       </p>
     </template>
@@ -101,6 +112,11 @@ export default {
     const BeforeBtnTxt = ref("");
     const isDispTxt = ref(false);
 
+    const menuContent = ref("");
+
+    // 自動補完するか
+　　const complementContents = ref(false);
+
     //前回データが存在するか？
     const isBeforeData = ref(false);
 
@@ -140,6 +156,7 @@ export default {
           },
         })
         .then((res) => {
+	  menuContent.value = res.data.menu.content;
           if (res.data.menu.oneSide === 1) {
             hasOneHand.value = true;
           } else {
@@ -161,7 +178,7 @@ export default {
         isBeforeData.value = true;
         beforeBodyWeight.value = secondRecordState.value.bodyWeight;
       } else {
-        msgNoBeforeData.value = "前回の記録はありません";
+        msgNoBeforeData.value = "記録がありません";
       }
     };
 
@@ -225,6 +242,8 @@ export default {
       secondRecord,
       hasSecondRecord,
       compGetData,
+      menuContent,
+      complementContents,
       fillBeforeRecord,
       fillThisTodalSet,
       fillBeforeTodalSet,
