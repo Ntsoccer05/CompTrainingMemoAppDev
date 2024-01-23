@@ -41,10 +41,10 @@
           <template v-if="isBeforeData">
             <div>
               <p class="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">
-                前回の体重：{{ beforeBodyWeight }}
+                {{ BeforeWeightTxt }}：{{ beforeBodyWeight }}
               </p>
               <p class="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">
-                前回の合計セット数：{{ beforeTotalSet }}
+                {{ BeforeTotalSetTxt }}：{{ beforeTotalSet }}
               </p>
             </div>
           </template>
@@ -63,6 +63,7 @@
         :menu_id="menu_id"
         :record_state_id="record_state_id"
 	:menu_content="menuContent"
+	:beforeHeaderTxt="BeforeHeaderTxt"
         :complementContents="complementContents"
         @beforeTotalSet="fillBeforeTodalSet"
         @totalSet="fillThisTodalSet"
@@ -109,8 +110,12 @@ export default {
     const fillBeforeBtn = ref("");
     const compGetData = ref(false);
 
+　　// 前回か前々回か
     const BeforeBtnTxt = ref("");
     const isDispTxt = ref(false);
+    const BeforeWeightTxt = ref("");
+    const BeforeTotalSetTxt = ref("");
+    const BeforeHeaderTxt = ref("");
 
     const menuContent = ref("");
 
@@ -180,6 +185,15 @@ export default {
       } else {
         msgNoBeforeData.value = "記録がありません";
       }
+　　　if (BeforeBtnTxt.value === "前回の記録を埋める") {
+        BeforeWeightTxt.value = "前回の体重";
+        BeforeTotalSetTxt.value = "前回の合計セット数";
+        BeforeHeaderTxt.value = "前回の記録";
+      } else {
+        BeforeWeightTxt.value = "前々回の体重";
+        BeforeTotalSetTxt.value = "前々回の合計セット数";
+        BeforeHeaderTxt.value = "前々回の記録";
+      }
     };
 
     //第一引数に子供の値が入っている。
@@ -208,10 +222,16 @@ export default {
       await getTgtRecords(loginUser.value.id, category_id, menu_id, record_state_id);
       if (hasTgtRecord.value) {
         BeforeBtnTxt.value = "前回の記録を埋める";
+	BeforeWeightTxt.value = "前回の体重";
+        BeforeTotalSetTxt.value = "前回の合計セット数";
+        BeforeHeaderTxt.value = "前回の記録";
         isDispTxt.value = false;
         compGetData.value = true;
       } else {
         BeforeBtnTxt.value = "前々回の記録を埋める";
+	BeforeWeightTxt.value = "前々回の体重";
+        BeforeTotalSetTxt.value = "前々回の合計セット数";
+        BeforeHeaderTxt.value = "前々回の記録";
         isDispTxt.value = true;
         compGetData.value = true;
       }
@@ -236,6 +256,9 @@ export default {
       BeforeBtnTxt,
       isDispTxt,
       beforeBodyWeight,
+      BeforeWeightTxt,
+      BeforeTotalSetTxt,
+      BeforeHeaderTxt,
       category_id,
       menu_id,
       record_state_id,

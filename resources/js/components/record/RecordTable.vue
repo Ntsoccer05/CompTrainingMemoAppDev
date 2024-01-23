@@ -9,7 +9,7 @@
           <div class="border" ref="todayRecordedAt">今回の記録</div>
         </th>
         <th class="text-left md:text-center indent-1 md:indent-0">
-          <div class="border" ref="beforeRecordedAt">前回の記録</div>
+          <div class="border" ref="beforeRecordedAt">{{ beforeHeaderTxt }}</div>
         </th>
       </tr>
     </thead>
@@ -268,6 +268,7 @@ export default {
     menu_id: String,
     record_state_id: String,
     menu_content: String,
+    beforeHeaderTxt: String,
     complementContents: Boolean,
   },
   setup(props, { emit }) {
@@ -276,6 +277,7 @@ export default {
     const second_record = computed(() => props.second_record);
     const menuContent = computed(() => props.menu_content);
     const complementContents = computed(() => props.complementContents);
+    const beforeHeaderTxt = computed(() => props.beforeHeaderTxt);
     const weight = ref([]);
     const rep = ref([]);
     const rightWeight = ref([]);
@@ -500,6 +502,7 @@ export default {
       route,
       maxSet,
       menuContent,
+      beforeHeaderTxt,
       complementContents,
       validateNumber,
       validateDecimalNumber,
