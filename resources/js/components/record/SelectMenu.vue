@@ -256,24 +256,26 @@ export default {
     });
 
     //遷移前処理
-    onBeforeRouteLeave((to, from) => {
+    onBeforeRouteLeave((to, from, next) => {
       if (to.name === "home") {
-        for (let record of records.value) {
-          // データがなければ記録削除
-          if (!record.category) {
-            // asyncの即時関数(その場で処理)
-            (async () => {
-              await axios
-                .post("/api/record/destroy", {
-                  recorded_at: recorded_day,
-                })
-                .then((res) => {})
-                .catch(() => {});
-            })();
-          } else {
-            break;
-          }
+        // データがなければ記録削除
+        if (records.value.length === 0) {
+          // asyncの即時関数(その場で処理)
+          (async () => {
+            await axios
+              .post("/api/record/destroy", {
+                recorded_at: recorded_day,
+              })
+              .then((res) => {
+                next();
+              })
+              .catch(() => {});
+          })();
+        } else {
+          next();
         }
+      } else {
+        next();
       }
     });
 
