@@ -1,17 +1,32 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import Login from '../views/certification/loginPage.vue';
-import Register from '../views/certification/registerPage.vue';
-import RedirectAuthGoogle from '../components/certification/RedirectAuthGoogle.vue'
-import googleRegister from '../views/certification/googleRegister.vue'
-import Home from '../views/home.vue';
-import SelectMenu from '../views/record/selectMenu.vue';
-import Record from '../views/record/recordContents.vue';
-import trainingMenuList from '../views/trainingMenuList.vue';
-import AddMenu from '../views/menu/addMenu.vue';
-import PasswordForget from '../views/certification/passwordForget.vue';
-import ResetPassword from '../views/certification/resetPassword.vue';
-import Inquiry from '../views/inquiry/inquiry.vue';
-import UserRecordRanking from '../views/ranking/userRecordRanking.vue';
+//遅延ローディング
+const Login = () =>import('../views/certification/loginPage.vue');
+const Register = () =>import('../views/certification/registerPage.vue');
+const RedirectAuthGoogle = () =>import('../components/certification/RedirectAuthGoogle.vue');
+const googleRegister = () =>import('../views/certification/googleRegister.vue');
+const Home = () =>import('../views/home.vue');
+const SelectMenu = () =>import('../views/record/selectMenu.vue');
+const Record = () =>import('../views/record/recordContents.vue');
+const trainingMenuList = () =>import('../views/trainingMenuList.vue');
+const AddMenu = () =>import('../views/menu/addMenu.vue');
+const PasswordForget = () =>import('../views/certification/passwordForget.vue');
+const ResetPassword = () =>import('../views/certification/resetPassword.vue');
+const Inquiry = () =>import('../views/inquiry/inquiry.vue');
+const UserRecordRanking = () =>import('../views/ranking/userRecordRanking.vue');
+
+// import Login from '../views/certification/loginPage.vue';
+// import Register from '../views/certification/registerPage.vue';
+// import RedirectAuthGoogle from '../components/certification/RedirectAuthGoogle.vue'
+// import googleRegister from '../views/certification/googleRegister.vue'
+// import Home from '../views/home.vue';
+// import SelectMenu from '../views/record/selectMenu.vue';
+// import Record from '../views/record/recordContents.vue';
+// import trainingMenuList from '../views/trainingMenuList.vue';
+// import AddMenu from '../views/menu/addMenu.vue';
+// import PasswordForget from '../views/certification/passwordForget.vue';
+// import ResetPassword from '../views/certification/resetPassword.vue';
+// import Inquiry from '../views/inquiry/inquiry.vue';
+// import UserRecordRanking from '../views/ranking/userRecordRanking.vue';
 
 const routes = [
   {

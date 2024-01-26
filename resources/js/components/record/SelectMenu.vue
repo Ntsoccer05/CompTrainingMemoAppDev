@@ -64,10 +64,12 @@
 <script>
 import EditableMenuTable from "./EditableMenuTable.vue";
 import { ref, onMounted, watch } from "vue";
+import { useStore } from "vuex";
 import { useRoute, useRouter, onBeforeRouteLeave } from "vue-router";
 import useGetLoginUser from "../../composables/certification/useGetLoginUser.js";
 import useGetRecordState from "../../composables/record/useGetRecordState";
 import useGetRecords from "../../composables/record/useGetRecords";
+
 export default {
   components: {
     EditableMenuTable,
@@ -75,6 +77,9 @@ export default {
   setup() {
     const router = useRouter();
     const route = useRoute();
+    const store = useStore();
+
+    store.commit("compGetData", false);
 
     const dispHeadText = ref("");
 
@@ -158,6 +163,7 @@ export default {
           },
         })
         .then((res) => {
+	  store.commit("compGetData", true);
           //編集画面でなければ
           if (!editable.value) {
             if (res.data.categories.length === 0) {
@@ -256,21 +262,25 @@ export default {
     });
 
     //遷移前処理
+    const deleteMenu = async (next) => {
+      await axios
+        .post("/api/record/destroy", {
+          recorded_at: recorded_day,
+        })
+        .then((res) => {
+          next();
+        })
+        .catch(() => {});
+    };
+
+    //遷移前処理
     onBeforeRouteLeave((to, from, next) => {
+      store.commit("compGetData", false);
       if (to.name === "home") {
-        // データがなければ記録削除
         if (records.value.length === 0) {
-          // asyncの即時関数(その場で処理)
-          (async () => {
-            await axios
-              .post("/api/record/destroy", {
-                recorded_at: recorded_day,
-              })
-              .then((res) => {
-                next();
-              })
-              .catch(() => {});
-          })();
+          deleteMenu(next);
+        } else if (records.value.length === 1 && !records.value[0].category) {
+          deleteMenu(next);
         } else {
           next();
         }

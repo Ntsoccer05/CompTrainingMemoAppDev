@@ -4,7 +4,7 @@
       <div
         class="flex justify-between items-center fixed w-full bg-gray-500 px-2 h-16 md:h-16"
       >
-        <template v-if="paramName === 'selectMenu'">
+        <template v-if="route.name === 'selectMenu' && compGetData">
           <h3 class="md:mr-auto md:border-none">
             <router-link
               :to="
@@ -17,7 +17,7 @@
             >
           </h3>
         </template>
-        <template v-else-if="paramName === 'record' || paramName === 'addMenu'">
+        <template v-else-if="route.name === 'record' && compGetData">
           <h3 class="md:mr-auto md:border-none">
             <router-link
               :to="{ name: 'selectMenu', params: { recordId: recorded_day } }"
@@ -26,7 +26,16 @@
             >
           </h3>
         </template>
-        <template v-else>
+        <template v-else-if="route.name === 'addMenu'">
+          <h3 class="md:mr-auto md:border-none">
+            <router-link
+              :to="{ name: 'selectMenu', params: { recordId: recorded_day } }"
+              class="md:text-xl font-semibold text-lg"
+              ><i class="fa-solid fa-arrow-left mr-2"></i>メニュー選択へ戻る</router-link
+            >
+          </h3>
+        </template>
+        <template v-else-if="isloaded">
           <h3 class="md:mr-auto md:border-none">
             <router-link
               :to="
@@ -35,7 +44,15 @@
                   : { name: 'home' }
               "
               class="text-xl font-semibold md:text-4xl"
-              >トレメモ</router-link
+              >
+              <template
+                v-if="
+                  route.name != 'selectMenu' &&
+                  route.name != 'record' &&
+                  route.name != 'addMenu'
+                "
+                >トレメモ</template
+              ></router-link
             >
           </h3>
         </template>
@@ -59,7 +76,7 @@
             class="md:flex md:justify-between md:items-center md:mr-1 md: m-auto lg:mr-0"
             @click="closeHumbuger"
           >
-            <template v-if="paramName === 'selectMenu' && !isOpen">
+            <template v-if="route.name === 'selectMenu' && !isOpen && compGetData">
               <li class="border-b border-t top- md:mr-auto md:border-none">
                 <router-link
                   :to="
@@ -72,9 +89,7 @@
                 >
               </li>
             </template>
-            <template
-              v-else-if="(paramName === 'record' || paramName === 'addMenu') && !isOpen"
-            >
+            <template v-else-if="route.name === 'record' && !isOpen && compGetData">
               <li class="border-b border-t top- md:mr-auto md:border-none">
                 <router-link
                   :to="{ name: 'selectMenu', params: { recordId: recorded_day } }"
@@ -84,7 +99,17 @@
                 >
               </li>
             </template>
-            <template v-else>
+            <template v-else-if="route.name === 'addMenu' && !isOpen">
+              <li class="border-b border-t top- md:mr-auto md:border-none">
+                <router-link
+                  :to="{ name: 'selectMenu', params: { recordId: recorded_day } }"
+                  class="block px-8 py-2 my-4 hover:bg-gray-600 rounded"
+                  ><i class="fa-solid fa-arrow-left mr-2"></i
+                  >メニュー選択へ戻る</router-link
+                >
+              </li>
+            </template>
+            <template v-else-if="isloaded">
               <li class="border-b border-t top- md:mr-auto md:border-none">
                 <router-link
                   :to="
@@ -93,7 +118,15 @@
                       : { name: 'home' }
                   "
                   class="block px-8 py-2 my-4 hover:bg-gray-600 rounded"
-                  >トレメモ</router-link
+                  ><template
+                    v-if="
+                      route.name != 'selectMenu' &&
+                      route.name != 'record' &&
+                      route.name != 'addMenu' &&
+                      isloaded
+                    "
+                    >トレメモ</template
+                  ></router-link
                 >
               </li>
             </template>
@@ -129,15 +162,17 @@
                 >
               </li>
             </template>
-            <li>
-              <div class="my-8 text-center md:my-4 md:mr-3">
-                <router-link
-                  to="/inquiry"
-                  class="px-6 py-2 bg-orange-500 hover:bg-orange-400 rounded-full"
-                  >お問い合わせ</router-link
-                >
-              </div>
-            </li>
+	    <template v-if="isloaded">
+              <li>
+                <div class="my-8 text-center md:my-4 md:mr-3">
+                  <router-link
+                    to="/inquiry"
+                    class="px-6 py-2 bg-orange-500 hover:bg-orange-400 rounded-full"
+                    >お問い合わせ</router-link
+                  >
+                </div>
+              </li>
+	    </template>
           </ul>
         </div>
       </div>
@@ -161,6 +196,7 @@ export default {
     const recorded_day = ref("");
     const recordedAt = ref("");
     const recorded_at = computed(() => store.getters.getRecordedAt);
+    const compGetData = computed(() => store.getters.compGetData);
 
     const paramName = ref("");
 
@@ -219,6 +255,7 @@ export default {
         });
     };
     return {
+      route,
       paramName,
       isOpen,
       isLogined,
@@ -226,6 +263,7 @@ export default {
       user,
       recorded_day,
       recordedAt,
+      compGetData,
       toggleNav,
       toHome,
       logout,

@@ -230,6 +230,8 @@ import { useRoute } from "vue-router";
 import useGetLoginUser from "../../composables/certification/useGetLoginUser.js";
 import useGetTgtRecordContent from "../../composables/record/useGetTgtRecordContent.js";
 import axios from "axios";
+import { useStore } from "vuex";
+
 // エンターキーを押すと次の要素入力可
 function keydown(e) {
   if (e.keyCode === 13) {
@@ -273,6 +275,9 @@ export default {
   },
   setup(props, { emit }) {
     const route = useRoute();
+    const store = useStore();
+    store.commit("compGetData", false);
+
     const hasOneHand = computed(() => props.hasOneHand);
     const second_record = computed(() => props.second_record);
     const menuContent = computed(() => props.menu_content);
@@ -486,6 +491,7 @@ export default {
         props.menu_id,
         props.record_state_id
       );
+      store.commit("compGetData", true);
     });
 
     return {

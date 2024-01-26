@@ -10,6 +10,7 @@ export default createStore({
         latestRecordState:"",
         latestRecordMenus:"",
         recorded_at:"",
+	compGetData: false,
     },
     getters:{
       isLogined:state => state.isLogined,
@@ -17,7 +18,8 @@ export default createStore({
       selectedDay:state => state.day,
       latestRecord:state=>state.latestRecordState,
       latestMenus:state=>state.latestRecordMenus,
-      getRecordedAt:state=>state.recorded_at
+      getRecordedAt:state=>state.recorded_at,
+      compGetData:state=>state.compGetData,
     },
     mutations:{
       LoginState(state){
@@ -39,7 +41,10 @@ export default createStore({
       },
       setRecordedAt(state, recordedAt){
         state.recorded_at = recordedAt
-      }
+      },
+      compGetData(state, status){
+        state.compGetData = status
+      },
     },
     actions:{
         async loginState({state}) {
