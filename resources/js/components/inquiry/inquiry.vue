@@ -84,7 +84,7 @@ window.onkeydown = keydown;
 </script>
 
 <template>
-  <form id="form" @submit.prevent="sendEmail" class="h-full">
+  <form id="form" @submit.prevent="sendEmail" class="h-full w-full">
     <!-- Name input -->
     <div class="relative mb-6" data-te-input-wrapper-init>
       <input

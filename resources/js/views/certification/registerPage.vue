@@ -1,11 +1,11 @@
 <template>
   <section class="h-screen">
-    <div class="container h-full px-6 py-24">
+    <div class="h-full px-6 py-24">
       <div
         class="g-6 flex h-full flex-wrap items-center justify-center lg:justify-between"
       >
         <!-- Left column container with background-->
-        <div class="mb-12 md:mb-0 md:w-8/12 hidden lg:w-6/12 lg:block">
+        <div class="mb-12 md:mb-0 md:w-8/12 hidden lg:w-6/12 lg:block h-screen">
           <img
             src="../../../images/charles-gaudreault-xXofYCc3hqc-unsplash.jpg"
             class="w-full"
@@ -14,7 +14,7 @@
         </div>
 
         <!-- Right column container with form -->
-        <div class="h-screen md:w-8/12 lg:ml-6 lg:w-5/12">
+        <div class="h-screen md:w-8/12 lg:ml-6 lg:w-5/12 w-full">
           <Register />
           <!-- Divider -->
           <div

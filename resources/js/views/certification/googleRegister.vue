@@ -1,6 +1,6 @@
 <template>
   <section class="h-screen">
-    <div class="container h-full px-6 py-24">
+    <div class="h-full px-6 py-24">
       <div
         class="g-6 flex h-full flex-wrap items-center justify-center lg:justify-between"
       >
@@ -14,7 +14,7 @@
         </div>
 
         <!-- Right column container with form -->
-        <div class="md:w-8/12 lg:ml-6 lg:w-5/12">
+        <div class="md:w-8/12 lg:ml-6 lg:w-5/12 w-full">
           <GoogleRegister />
 
           <!--Login button-->

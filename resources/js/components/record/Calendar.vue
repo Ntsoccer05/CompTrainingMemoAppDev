@@ -205,7 +205,7 @@ const moveToday = () => {
 </script>
 
 <template>
-  <div class="calendar container md:w-11/12 ml:h-2/3 mx-auto h-2/3">
+  <div class="calendar md:w-11/12 ml:h-2/3 mx-auto h-2/3">
     <!-- $event.targetでクリックした要素を取得できる -->
     <template v-if="compGetData && isLoaded">
       <v-calendar

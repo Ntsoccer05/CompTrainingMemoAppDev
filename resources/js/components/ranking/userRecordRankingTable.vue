@@ -83,6 +83,7 @@ const categoryContents = computed(() => props.category_contents);
         </template>
       </div>
     </div>
+    <div class="h-12"></div>
   </div>
 </template>
 

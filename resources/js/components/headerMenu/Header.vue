@@ -1,6 +1,6 @@
 <template>
-  <div class="bg-gray-500 h-12 md:h-16">
-    <header class="container mx-auto text-white relative z-10">
+  <div class="bg-gray-500 h-16 md:h-16">
+    <header class="container text-white relative z-10">
       <div
         class="flex justify-between items-center fixed w-full bg-gray-500 px-2 h-16 md:h-16"
       >
