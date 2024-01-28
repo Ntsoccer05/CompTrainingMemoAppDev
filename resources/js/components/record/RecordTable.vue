@@ -21,7 +21,7 @@
             <!-- changeだとfocusが外れた時、inputは入力したとき -->
             <!-- v-modelは:valueと@changeで表せる -->
             <input
-              class="border w-full"
+              class="border w-full pl-0.5"
               type="text"
               placeholder="重さ(kg)"
               maxlength="6"
@@ -31,7 +31,7 @@
               @blur="postRecordContent(index)"
             />
             <input
-              class="border w-full"
+              class="border w-full pl-0.5"
               type="text"
               placeholder="回数"
               maxlength="3"
@@ -43,7 +43,7 @@
           </div>
           <div :class="hasOneHand ? 'block' : 'hidden'">
             <input
-              class="border w-full"
+              class="border w-full pl-0.5"
               type="text"
               placeholder="重さ（右）(kg)"
               maxlength="6"
@@ -53,7 +53,7 @@
               @blur="postRecordContent(index)"
             />
             <input
-              class="border w-full"
+              class="border w-full pl-0.5"
               type="text"
               placeholder="回数（右）"
               maxlength="3"
@@ -63,7 +63,7 @@
               @blur="postRecordContent(index)"
             />
             <input
-              class="border w-full"
+              class="border w-full pl-0.5"
               type="text"
               placeholder="重さ（左）(kg)"
               maxlength="6"
@@ -73,7 +73,7 @@
               @blur="postRecordContent(index)"
             />
             <input
-              class="border w-full"
+              class="border w-full pl-0.5"
               type="text"
               placeholder="回数（左）"
               maxlength="3"
@@ -85,7 +85,7 @@
           </div>
           <div class="border">
             <textarea
-              class="w-full leading-3"
+              class="w-full leading-4 pl-0.5"
               v-model="memo[index]"
               cols="20"
               rows="4"
@@ -147,7 +147,7 @@
             </div>
             <div class="border">
               <textarea
-                class="w-full leading-3"
+                class="w-full leading-4"
                 name=""
                 id=""
                 cols="20"
@@ -207,7 +207,7 @@
             </div>
             <div class="border">
               <textarea
-                class="w-full leading-3"
+                class="w-full leading-4"
                 name=""
                 id=""
                 cols="20"
