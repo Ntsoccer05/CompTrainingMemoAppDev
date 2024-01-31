@@ -37,3 +37,14 @@ select:-webkit-autofill {
   -webkit-text-fill-color: black !important;
 }
 </style>
+
+// 以下で指定しているstyleはModalのため動的に追加される要素であるためdeepを指定
+<style deep>
+.vm-wrapper {
+  display: flex;
+  align-items: center;
+}
+.vm-wrapper .vm {
+  top: auto;
+}
+</style>

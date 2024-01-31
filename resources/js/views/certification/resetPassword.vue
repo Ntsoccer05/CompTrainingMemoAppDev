@@ -12,6 +12,8 @@ const queryParameters = new URLSearchParams(window.location.search);
 const email = queryParameters.get("email");
 const token = queryParameters.get("token");
 
+const dispAlertModal = ref(false);
+
 // 送信データ
 const form = reactive({
   email,
@@ -30,6 +32,10 @@ const dispErrorMsg = reactive({
   email: false,
   password: false,
 });
+
+const toLogin = () => {
+  router.push("/login");
+};
 
 // パスワードと確認用パスワードのタイプをパスワードかテキストか
 const displayPass = ref(false);
@@ -70,9 +76,7 @@ const sendForgotPasswordEmail = async () => {
     })
     .then((res) => {
       // 成功時
-      alert("パスワードを変更しました。ログインお願いします。");
-      // アラートにてOK押下後処理
-      router.push("/login");
+      dispAlertModal.value = true;
     })
     .catch((err) => {
       // POST時のバリデーションエラー
@@ -168,6 +172,22 @@ const sendForgotPasswordEmail = async () => {
       </button>
     </div>
   </form>
+  <Modal
+    v-model="dispAlertModal"
+    title="パスワード変更完了"
+    wrapper-class="modal-wrapper"
+    class="flex align-center"
+    @closing="toLogin()"
+  >
+    <p>パスワードを変更しました。ログインお願いします。</p>
+    <button
+      class="col-12 mt-5 text-center inline-block w-full rounded px-6 pb-2 pt-2.5 text-base font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_rgba(0,0,0,0.2)] transition duration-150 ease-in-out hover:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] focus:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] focus:outline-none focus:ring-0 active:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)]"
+      style="background: linear-gradient(to right, #ee7724, #d8363a, #dd3675, #b44593)"
+      @click="toLogin"
+    >
+      ログイン画面へ
+    </button>
+  </Modal>
 </template>
 
 <style scoped></style>
