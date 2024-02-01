@@ -225,11 +225,27 @@ export default {
             addCategory.value = "";
             getMenus();
             alert("部位を追加しました。");
+            //バリデーションメッセージを初期化
+            dispErrorMsg.category_content = false;
+            dispErrorMsg.menu = false;
+            //バリデーションエラーメッセージのレイアウト
+            const { dispCategoryErrMsg, dispMenuErrMsg } = dispValidationMsg(
+              dispErrorMsg
+            );
+            return { dispCategoryErrMsg, dispMenuErrMsg };
           } else {
             if (addMenu.value !== "") {
               addMenu.value = "";
               getMenus();
               alert("種目を追加しました。");
+	      //バリデーションメッセージを初期化
+              dispErrorMsg.category_content = false;
+              dispErrorMsg.menu = false;
+              //バリデーションエラーメッセージのレイアウト
+              const { dispCategoryErrMsg, dispMenuErrMsg } = dispValidationMsg(
+                dispErrorMsg
+              );
+              return { dispCategoryErrMsg, dispMenuErrMsg };
             }
           }
         })
