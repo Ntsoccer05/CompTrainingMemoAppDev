@@ -1,5 +1,5 @@
 <script setup>
-import { reactive } from "vue";
+import { reactive, ref } from "vue";
 import { useRouter } from "vue-router";
 import axios from "axios";
 import useValidationMsg from "../../composables/inquiry/useValidationMsg";
@@ -25,11 +25,17 @@ const dispErrorMsg = reactive({
   content: false,
 });
 
+const dispAlertModal = ref(false);
+const btnEnabled = ref(false);
+const btnColor = ref("background: linear-gradient(to right, #ee7724, #d8363a, #dd3675, #b44593)");
+
 //バリデーションエラーメッセージのレイアウト
 const { dispEmailErrMsg, dispContentErrMsg } = dispValidationMsg(dispErrorMsg);
 
 // 送信するボタン押下処理
 const sendEmail = async () => {
+  btnEnabled.value = true;
+  btnColor.value = "background: linear-gradient(to right, rgb(238 119 36 / 30%), rgb(216 54 58 / 30%), rgb(221 54 117 / 30%), rgb(180 69 147 / 30%))";
   await axios
     .post("/api/inquiry", {
       name: form.name,
@@ -41,9 +47,13 @@ const sendEmail = async () => {
       //エラーメッセージを非表示
       dispEmailErrMsg.value = "hidden";
       dispContentErrMsg.value = "hidden";
-      alert("お問い合わせ内容を送信しました。");
+      dispAlertModal.value = true;
+      btnEnabled.value = false;
+      btnColor.value = "background: linear-gradient(to right, #ee7724, #d8363a, #dd3675, #b44593)";
     })
     .catch((err) => {
+      btnEnabled.value = false;
+      btnColor.value = "background: linear-gradient(to right, #ee7724, #d8363a, #dd3675, #b44593)";
       // POST時のバリデーションエラー
       const errorMsgs = err.response.data.errors;
       useValidationMsg(errorMsgs, errors, dispErrorMsg);
@@ -144,13 +154,18 @@ window.onkeydown = keydown;
         type="button"
         data-te-ripple-init
         data-te-ripple-color="light"
-        style="background: linear-gradient(to right, #ee7724, #d8363a, #dd3675, #b44593)"
+        :style="btnColor"
         @click.prevent="sendEmail"
+        :disabled="btnEnabled"
       >
         送信する
       </button>
     </div>
   </form>
+  <Modal v-model="dispAlertModal" title="お問い合わせ送信完了" wrapper-class="modal-wrapper" class="flex align-center"
+  >
+    <p>お問い合わせ内容を送信しました。</p>
+  </Modal>
 </template>
 
 <style scoped></style>
