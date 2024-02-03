@@ -32,10 +32,17 @@ class LoginController extends Controller
 
         $user = User::where('name', $request->name)->first();
         // 登録されているハッシュ化されたパスワードと入力したパスワードが一致しているかチェック
-        $check_password = Hash::check($request->password, $user->password);
-        if(!$check_password){
-            $msg = ['password'=>'パスワードが間違っています'];
-            return response()->json(['status_code' => $status,'errors' => $msg], 401);
+        if($user->password){
+            $check_password = Hash::check($request->password, $user->password);
+            if(!$check_password){
+                $msg = ['password'=>'パスワードが間違っています'];
+                return response()->json(['status_code' => $status,'errors' => $msg, 'pass' => $request->password, 'upass'=> $user->password], 401);
+            }
+        }else{
+            if(Auth::guard('web')->attempt($credentials)){
+                $request->session()->regenerate();
+                return response()->json(['status_code' => $status,'message' => 'ログインしました', '$credentials'=>$credentials, 'pass'=> $request->password], 200);
+            };
         }
 
         if(Auth::guard('web')->attempt($credentials)){

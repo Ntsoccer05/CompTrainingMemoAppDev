@@ -61,7 +61,8 @@ watch(records, () => {
           backgroundColor: "red",
         },
       },
-      dates: new Date(record.recorded_at.recorded_at),
+      // safariだと年-月-日だとNanとなるため年/月/日に変更
+      dates: new Date(record.recorded_at.recorded_at.replace(/-/g, "/")),
     };
     attrs.value = [...attrs.value, event];
   });
@@ -73,7 +74,8 @@ watch(holidays.value, () => {
       dot: true,
       // Text styles
       content: "red",
-      dates: new Date(holiday),
+      // safariだと年-月-日だとNanとなるため年/月/日に変更
+      dates: new Date(holiday.replace(/-/g, "/")),
     };
     attrs.value = [...attrs.value, obj];
   });
@@ -88,7 +90,8 @@ const changeDayFormat = (day) => {
   // 年-月-日の形に修正
   day = day.replace("日", "");
   day = day.replace(/年|月/g, "-");
-  const date = new Date(day);
+  // safariだと年-月-日だとNanとなるため年/月/日に変更
+  const date = new Date(day.replace(/-/g, "/"));
   day = `${date.getFullYear().toString()}-${(date.getMonth() + 1)
     .toString()
     .padStart(2, "0")}-${date.getDate().toString().padStart(2, "0")}`;
@@ -118,7 +121,8 @@ onMounted(async () => {
     toDetailPage();
     // クエリパラメータがあればリロード時にその日付が存在するページを表示
     if (route.query.day) {
-      calendarDom.move(new Date(route.query.day));
+      // safariだと年-月-日だとNanとなるため年/月/日に変更
+      calendarDom.move(new Date((route.query.day).replace(/-/g, "/")));
       delete route.query.day;
     }
   });
