@@ -15,11 +15,18 @@ class RecordMenuController extends Controller
         $category_id = $request->category_id;
         $menu_id = $request->menu_id;
         $record_state_id = $request->record_state_id;
-        $recorded_at = $request->recorded_at;
-        $secondRecordState = $recordMenu->where(function($query) use($user_id, $category_id, $menu_id, $record_state_id, $recorded_at){
-            $query->where([['user_id', $user_id], ['category_id', $category_id], ['menu_id', $menu_id]])->whereDate('recorded_at' ,'<=', $recorded_at);
+	$recorded_at = $request->recorded_at;
+	if($request->thisTotalSet){
+            $secondRecordState = $recordMenu->where(function($query) use($user_id, $category_id, $menu_id, $record_state_id, $recorded_at){
+                $query->where([['user_id', $user_id], ['category_id', $category_id], ['menu_id', $menu_id]])->whereDate('recorded_at' ,'<=', $recorded_at);
             // offset(数)←先頭から引数の数だけ飛ばす
-        })->orderBy('recorded_at', 'desc')->offset(1)->first();
+            })->orderBy('recorded_at', 'desc')->offset(1)->first();
+	else{
+            $secondRecordState = $recordMenu->where(function($query) use($user_id, $category_id, $menu_id, $record_state_id, $recorded_at){
+                $query->where([['user_id', $user_id], ['category_id', $category_id], ['menu_id', $menu_id]])->whereDate('recorded_at' ,'<=', $recorded_at);
+                // offset(数)←先頭から引数の数だけ飛ばす
+            })->orderBy('recorded_at', 'desc')->first();
+        }
 	if($secondRecordState){
 	    $secondRecordState = $secondRecordState->load("recordState");
             $secondRecords = $secondRecordState->recordContents()->orderBy('set', 'asc')->get();

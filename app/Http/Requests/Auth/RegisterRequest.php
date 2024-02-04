@@ -26,8 +26,8 @@ class RegisterRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|unique:users|string',
-            'email' => 'nullable|unique:users|email',
+            'name' => 'nullable|unique:users|string',
+            'email' => 'required|unique:users|email',
             'password' => 'nullable|string' 
         ];
     }
@@ -35,8 +35,8 @@ class RegisterRequest extends FormRequest
     public function messages()
     {
         return [
-            'name.required' => ':attributeは必須項目です。',
-            'name.unique'=> ':attributeは既に使用されています。',
+	    'name.unique'=> ':attributeは既に使用されています。',
+	    'email.required' => ':attributeは必須項目です。',
             'email.unique' => ':attributeは登録できません。',
             'email.email' => '正しいメールアドレスを指定してください。',
         ];

@@ -26,8 +26,8 @@ class LoginRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|exists:users',
-            'email' => 'nullable|email|exists:users',
+            'name' => 'nullable|exists:users',
+            'email' => 'required|email|exists:users',
             'password' => 'nullable'
         ];
     }
@@ -35,8 +35,8 @@ class LoginRequest extends FormRequest
     public function messages()
     {
         return [
-            'name.required' => ':attributeは必須項目です。',
-            'name.exists' => '入力された:attributeは登録されていません。',
+	    'name.exists' => '入力された:attributeは登録されていません。',
+	    'email.required' => ':attributeは必須項目です。',
             'email.email' => '正しいメールアドレスを指定してください。',
             'email.exists' => '入力された:attributeは登録されていません。',
         ];

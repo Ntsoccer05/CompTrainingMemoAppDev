@@ -40,6 +40,7 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::get('/recordMenu', [RecordMenuController::class, 'index']);
     Route::post('/recordMenu/create', [RecordMenuController::class, 'create']);
     Route::get('/recordContent', [RecordContentController::class, 'index']);
+    Route::get('/recordContent/show', [RecordContentController::class, 'show']);
     Route::post('/recordContent/create', [RecordContentController::class, 'create']);
     Route::post('/recordContent/delete', [RecordContentController::class, 'delete']);
     Route::get('/recordRanking/user', [RecordRankingController::class, 'index']);

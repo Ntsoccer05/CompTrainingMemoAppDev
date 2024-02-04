@@ -35,7 +35,7 @@ class RegisterController extends Controller
     public function registerProviderUser(RegisterRequest $request, string $provider)
     {
         $request->validate([
-            'name' => ['required', 'string', 'unique:users'],
+            'name' => ['nullable', 'string', 'unique:users'],
             'token' => ['required', 'string']
         ]);
 

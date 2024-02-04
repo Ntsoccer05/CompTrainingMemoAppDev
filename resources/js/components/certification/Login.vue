@@ -8,7 +8,6 @@
         id="name"
         v-model="name"
         placeholder="ユーザ名"
-        required
       />
       <label
         for="name"
@@ -26,6 +25,7 @@
         id="email"
         v-model="email"
         placeholder="メールアドレス"
+	required
       />
       <label
         for="email"

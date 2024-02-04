@@ -12,6 +12,12 @@
         >
           {{ BeforeBtnTxt }}
         </button>
+        <button
+            class="block w-11/12 bg-green-500 hover:bg-green-700 text-white font-bold md:py-2 py-px px-4 border-2 border-black mt-3 mb-3 mx-auto"
+            @click="confirmHistory()"
+          >
+            履歴を確認
+        </button>
 	  <p
             :class="[
               'mx-auto text-red-500 text-sm mt-1 mb-2 text-center',
@@ -76,6 +82,29 @@
         データ取得中です。しばらくお待ちください。
       </p>
     </template>
+    <Modal v-model="showModal" :title="menuContent" modal-class="scrollable-modal">
+      <div class="scrollable-content">
+        <HistoryRecordContents
+          :historyMenus="historyMenus"
+          :historyRecords="historyRecords"
+          :hasHistoryRecord="hasHistoryRecord"
+          :hasOneHand="hasOneHand"
+        />
+      </div>
+      <div class="row scrollable-modal-footer">
+        <div class="col-sm-12">
+          <div class="text-center">
+            <button
+              class="block w-11/12 bg-blue-500 hover:bg-blue-700 text-white font-bold border-2 border-black mx-auto"
+              type="button"
+              @click="showModal = false"
+            >
+              閉じる
+            </button>
+          </div>
+        </div>
+      </div>
+    </Modal>
     <Modal
       v-model="dispAlertModal"
       title="権限エラー"
@@ -95,20 +124,17 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import { ref, onMounted, computed } from "vue";
-import { useRoute } from "vue-router";
+import { useRoute, onBeforeRouteLeave } from "vue-router";
 import { useStore } from "vuex";
 import useGetRecordState from "../../composables/record/useGetRecordState";
 import useGetLoginUser from "../../composables/certification/useGetLoginUser.js";
-import useGetSecondRecordContent from "../../composables/record/useGetSecondRecordContent";
+import useGetSecondRecordContent from "../../composables/record/useGetSecondRecordContent.js";
 import RecordTable from "./RecordTable.vue";
 import useGetTgtRecordContent from "../../composables/record/useGetTgtRecordContent.js";
-export default {
-  components: {
-    RecordTable,
-  },
-  setup() {
+import HistoryRecordContents from "./HistoryRecordContents.vue";
+import useGetHistoryRecordContent from "../../composables/record/useGetHistoryRecordContent.js";
     const route = useRoute();
     const store = useStore();
 
@@ -128,6 +154,9 @@ export default {
 
     const fillBeforeBtn = ref("");
     const compGetData = ref(false);
+
+    // 履歴を表示するか
+    const showModal = ref(false);
 
 　　// 前回か前々回か
     const BeforeBtnTxt = ref("");
@@ -207,7 +236,8 @@ export default {
         category_id,
         menu_id,
         record_state_id,
-        route.params.recordId
+        route.params.recordId,
+        thisTotalSet
       );
       if (hasSecondRecord.value) {
         isBeforeData.value = true;
@@ -245,11 +275,61 @@ export default {
       }
     };
 
+    const {
+  historyRecords,
+  historyMenus,
+  hasHistoryRecord,
+  getHistoryRecords,
+} = useGetHistoryRecordContent();
+
+const confirmHistory = async () => {
+  //今回記録するデータの値を取得
+  await getHistoryRecords(
+    loginUser.value.id,
+    category_id,
+    menu_id,
+    record_state_id,
+    route.params.recordId
+  );
+  showModal.value = true;
+};
+
+const deleteFirstRecord = async () => {
+  await axios
+    .post("/api/recordContent/delete", {
+      user_id: loginUser.value.id,
+      category_id: route.query.categoryId,
+      menu_id: route.query.menuId,
+      record_state_id: route.query.recordId,
+      recorded_at: route.params.recordId,
+      set: 0,
+    })
+    .then((res) => {
+    })
+    .catch((err) => {
+    });
+};
+
+const firstRecord = async () => {
+  await axios
+    .post("/api/recordContent/create", {
+      user_id: loginUser.value.id,
+      category_id: route.query.categoryId,
+      menu_id: route.query.menuId,
+      record_state_id: route.query.recordId,
+      recorded_at: route.params.recordId,
+      set: 0,
+    })
+    .then((res) => {})
+    .catch((err) => {});
+};
+
     onMounted(async () => {
       await getLoginUser();
       if (dispModal.value) {
         dispAlertModal.value = true;
       }
+      await firstRecord();
       await getLatestRecordState();
       await getMenuContent();
       await getTgtRecords(loginUser.value.id, category_id, menu_id, record_state_id);
@@ -277,37 +357,18 @@ export default {
       }
     });
 
-    return {
-      header,
-      thisTotalSet,
-      beforeTotalSet,
-      isBeforeData,
-      msgNoBeforeData,
-      hasOneHand,
-      bodyWeight,
-      fillBeforeBtn,
-      BeforeBtnTxt,
-      isDispTxt,
-      beforeBodyWeight,
-      BeforeWeightTxt,
-      BeforeTotalSetTxt,
-      BeforeHeaderTxt,
-      category_id,
-      menu_id,
-      record_state_id,
-      secondRecord,
-      hasSecondRecord,
-      compGetData,
-      menuContent,
-      complementContents,
-      fillBeforeRecord,
-      fillThisTodalSet,
-      fillBeforeTodalSet,
-      ableToClickBefore,
-      dispAlertModal,
-      toHome,
-      toLogin,
-    };
-  },
-};
+    //遷移前処理
+onBeforeRouteLeave(async (to, from, next) => {
+  if (to.name === "selectMenu") {
+    if (thisTotalSet.value === 0) {
+      await deleteFirstRecord();
+      next();
+    } else {
+      next();
+    }
+  } else {
+    next();
+  }
+});
+
 </script>

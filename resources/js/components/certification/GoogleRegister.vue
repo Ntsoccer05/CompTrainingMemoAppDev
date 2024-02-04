@@ -12,7 +12,7 @@
       <label
         for="username"
         class="pointer-events-none absolute duration-300 bg-white scale-[0.8] transform -translate-y-[1.15rem] top-2 origin-[0] text-neutral-500 px-2 peer-focus:px-2 peer-focus:text-primary peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-[0.8] peer-focus:-translate-y-[1.15rem] left-1 dark:text-neutral-200 dark:peer-focus:text-primary"
-        >ユーザ名
+        >ユーザ名<span class="text-sm text-black-600">(※任意)</span>
       </label>
       <p :class="dispNameErrMsg">{{ errors.name[0] }}</p>
     </div>
