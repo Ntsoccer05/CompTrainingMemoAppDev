@@ -150,11 +150,11 @@ class RecordContentController extends Controller
         $tgtRecordMenu=$recordMenu->where(function($query) use($user_id, $category_id, $menu_id,$record_state_id){
             $query->where([['user_id', $user_id], ['category_id', $category_id], ['menu_id', $menu_id],['record_state_id', $record_state_id]]);
         })->first();
-	if($tgtRecordMenu){
-	　　if($request->set === 0){
+        if($tgtRecordMenu){
+            if($request->set === 0){
                 return response()->json(["status_code" => 200, "message" => "初期データは登録済みです。"]);
             }
-	    $tgtMenu = $tgtRecordMenu->menu;
+            $tgtMenu = $tgtRecordMenu->menu;
             $tgtRecordContent = $tgtRecordMenu->recordContents()->where('set',$request->set)->first();
             if($tgtRecordContent){
                 if(!$request->weight && 
@@ -168,8 +168,8 @@ class RecordContentController extends Controller
                 }else{
                     $tgtRecordContent->user_id=$request->user_id;
                     $tgtRecordContent->record_state_id=$request->record_state_id;
-		    $tgtRecordContent->record_menu_id=$tgtRecordMenu->id;
-		    $tgtRecordContent->menu_id=$tgtRecordMenu->menu_id;
+                    $tgtRecordContent->record_menu_id=$tgtRecordMenu->id;
+                    $tgtRecordContent->menu_id=$tgtRecordMenu->menu_id;
                     $tgtRecordContent->category_id=$tgtRecordMenu->category_id;
                     $tgtRecordContent->weight = $request->weight;
                     $tgtRecordContent->right_weight = $request->right_weight;
@@ -177,8 +177,8 @@ class RecordContentController extends Controller
                     $tgtRecordContent->left_weight = $request->left_weight;
                     $tgtRecordContent->left_rep = $request->left_rep;
                     $tgtRecordContent->set = $request->set;
-		    $tgtRecordContent->rep = $request->rep;
-		    if($tgtMenu->oneSide === 0 && $request->weight && $request->rep){
+                    $tgtRecordContent->rep = $request->rep;
+                    if($tgtMenu->oneSide === 0 && $request->weight && $request->rep){
                         $tgtRecordContent->volume = $request->weight * $request->rep;
                     }
                     if($tgtMenu->oneSide === 1 && $request->right_weight && $request->right_rep){
@@ -205,15 +205,15 @@ class RecordContentController extends Controller
                !$request->left_rep &&
                ($request->set < 0)
             ){
-                    return response()->json(["status_code" => 200, "message" => "データを入力してください。"]);
+                return response()->json(["status_code" => 200, "message" => "データを入力してください。"]);
             }else{
                 $recordMenu->user_id=$request->user_id;
                 $recordMenu->record_state_id=$record_state_id;
                 $recordMenu->recorded_at=$recorded_at;
                 $recordMenu->menu_id=$menu_id;
                 $recordMenu->category_id=$category_id;
-		$recordMenu->save();
-		if($request->set === 0){
+                $recordMenu->save();
+                if($request->set === 0){
                     return response()->json(["status_code" => 200, "message" => "初期データを登録しました。"]);
                 }
             }
@@ -229,14 +229,14 @@ class RecordContentController extends Controller
            !$request->left_rep &&
            ($request->set < 0)
         ){
-                $totalSet = $tgtRecordMenu->recordContents()->count();
-                return response()->json(["status_code" => 200, "message" => "データを入力してください。",  "totalSet"=> $totalSet]);
-	}else{
-	    $tgtMenu = $tgtRecordMenu->menu;
+            $totalSet = $tgtRecordMenu->recordContents()->count();
+            return response()->json(["status_code" => 200, "message" => "データを入力してください。",  "totalSet"=> $totalSet]);
+        }else{
+            $tgtMenu = $tgtRecordMenu->menu;
             $recordContent->user_id=$request->user_id;
             $recordContent->record_state_id=$request->record_state_id;
-	    $recordContent->record_menu_id=$tgtRecordMenu->id;
-	    $recordContent->menu_id=$tgtRecordMenu->menu_id;
+            $recordContent->record_menu_id=$tgtRecordMenu->id;
+            $recordContent->menu_id=$tgtRecordMenu->menu_id;
             $recordContent->category_id=$tgtRecordMenu->category_id;
             $recordContent->weight = $request->weight;
             $recordContent->right_weight = $request->right_weight;
@@ -244,8 +244,8 @@ class RecordContentController extends Controller
             $recordContent->left_weight = $request->left_weight;
             $recordContent->left_rep = $request->left_rep;
             $recordContent->set = $request->set;
-	    $recordContent->rep = $request->rep;
-	    if($tgtMenu->oneSide === 0 && $request->weight && $request->rep){
+            $recordContent->rep = $request->rep;
+            if($tgtMenu->oneSide === 0 && $request->weight && $request->rep){
                 $recordContent->volume = $request->weight * $request->rep;
             }
             if($tgtMenu->oneSide === 1 && $request->right_weight && $request->right_rep){
@@ -280,3 +280,4 @@ class RecordContentController extends Controller
         return response()->json(["status_code" => 200, "message" => "削除データが存在しませんでした。"]);
     }
 }
+

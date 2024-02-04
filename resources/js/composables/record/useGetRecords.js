@@ -6,7 +6,7 @@ export default function useGetRecords(){
     const records = ref("");
     const compGetData = ref(false);
     
-    const getRecords = async(user_id, recorded_at=null)=>{
+    const getRecords = async(user_id, recorded_at="")=>{
         await axios.get("/api/recordContent", {
             // get時にパラメータを渡す際はparamsで指定が必要
             params:{
