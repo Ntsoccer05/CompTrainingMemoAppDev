@@ -145,7 +145,9 @@ class RecordContentController extends Controller
         $category_id = $request->category_id;
         $menu_id = $request->menu_id;
         $record_state_id = $request->record_state_id;
-        $recorded_at = $request->recorded_at;
+	$recorded_at = $request->recorded_at;
+
+	$totalSet = 0;
         
         $tgtRecordMenu=$recordMenu->where(function($query) use($user_id, $category_id, $menu_id,$record_state_id){
             $query->where([['user_id', $user_id], ['category_id', $category_id], ['menu_id', $menu_id],['record_state_id', $record_state_id]]);
@@ -203,9 +205,9 @@ class RecordContentController extends Controller
                !$request->right_rep && 
                !$request->left_weight &&
                !$request->left_rep &&
-               ($request->set < 0)
+               ($request->set !== 0)
             ){
-                return response()->json(["status_code" => 200, "message" => "データを入力してください。"]);
+                return response()->json(["status_code" => 200, "message" => "データを入力してください。",  "totalSet"=> $totalSet]);
             }else{
                 $recordMenu->user_id=$request->user_id;
                 $recordMenu->record_state_id=$record_state_id;
@@ -226,8 +228,7 @@ class RecordContentController extends Controller
            !$request->right_weight &&
            !$request->right_rep &&
            !$request->left_weight &&
-           !$request->left_rep &&
-           ($request->set < 0)
+           !$request->left_rep
         ){
             $totalSet = $tgtRecordMenu->recordContents()->count();
             return response()->json(["status_code" => 200, "message" => "データを入力してください。",  "totalSet"=> $totalSet]);

@@ -93,8 +93,14 @@ class RecordController extends Controller
     public function destroy(Request $request, RecordState $recordState)
     {
         //
+        $userId = $request->user_id;
         $recorded_at = $request->recorded_at;
-        $recordState->where('recorded_at', $recorded_at)->delete();
-        return response()->json(["status"=>200,"message"=> "レコードを削除しました。"]);
+        $TgtRecordState=$recordState->where('recorded_at', $recorded_at)->where('user_id', $userId)->first();
+        if($TgtRecordState){
+            $TgtRecordState->delete();
+            return response()->json(["status"=>200,"message"=> "レコードを削除しました。"]);
+        }else{
+            return response()->json(["status"=>200,"message"=> "削除データは存在しませんでした。"]);
+        }
     }
 }

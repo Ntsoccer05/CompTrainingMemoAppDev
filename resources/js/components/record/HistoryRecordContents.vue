@@ -1,11 +1,11 @@
 <template>
   <div>
-    <div class="text-center">過去５件を表示しています。</div>
+    <div class="text-center">最大過去５件を表示しています。</div>
     <template v-for="(historyMenu, index) in historyMenus" :key="historyMenu.id">
       <table class="border border-collapse table-fixed mx-auto mt-5">
         <thead>
           <tr>
-            <th class="text-left md:text-center indent-1 md:indent-0">
+            <th class="text-center bg-green-400 indent-1 md:indent-0">
               <div class="border" ref="todayRecordedAt">
                 {{ historyMenu.recorded_at }}の記録
               </div>

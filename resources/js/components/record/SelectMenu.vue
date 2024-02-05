@@ -297,6 +297,7 @@ export default {
     const deleteMenu = async (next) => {
       await axios
         .post("/api/record/destroy", {
+	  user_id: loginUser.value.id,
           recorded_at: recorded_day,
         })
         .then((res) => {

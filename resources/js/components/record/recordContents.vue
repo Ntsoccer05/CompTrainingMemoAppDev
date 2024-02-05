@@ -250,9 +250,9 @@ import useGetHistoryRecordContent from "../../composables/record/useGetHistoryRe
         BeforeTotalSetTxt.value = "前回の合計セット数";
         BeforeHeaderTxt.value = "前回の記録";
       } else {
-        BeforeWeightTxt.value = "前々回の体重";
-        BeforeTotalSetTxt.value = "前々回の合計セット数";
-        BeforeHeaderTxt.value = "前々回の記録";
+        // BeforeWeightTxt.value = "前々回の体重";
+        // BeforeTotalSetTxt.value = "前々回の合計セット数";
+        // BeforeHeaderTxt.value = "前々回の記録";
       }
     };
 
@@ -270,8 +270,8 @@ import useGetHistoryRecordContent from "../../composables/record/useGetHistoryRe
         BeforeBtnTxt.value = "前回の記録を埋める";
         isDispTxt.value = false;
       } else {
-        BeforeBtnTxt.value = "前々回の記録を埋める";
-        isDispTxt.value = true;
+        // BeforeBtnTxt.value = "前々回の記録を埋める";
+        // isDispTxt.value = true;
       }
     };
 
@@ -341,12 +341,12 @@ const firstRecord = async () => {
         isDispTxt.value = false;
         compGetData.value = true;
       } else {
-        BeforeBtnTxt.value = "前々回の記録を埋める";
-	BeforeWeightTxt.value = "前々回の体重";
-        BeforeTotalSetTxt.value = "前々回の合計セット数";
-        BeforeHeaderTxt.value = "前々回の記録";
-        isDispTxt.value = true;
-        compGetData.value = true;
+        // BeforeBtnTxt.value = "前々回の記録を埋める";
+        // BeforeWeightTxt.value = "前々回の体重";
+        // BeforeTotalSetTxt.value = "前々回の合計セット数";
+        // BeforeHeaderTxt.value = "前々回の記録";
+        // isDispTxt.value = true;
+        // compGetData.value = true;
       }
       const fillBeforeBtnDom = fillBeforeBtn.value;
 
