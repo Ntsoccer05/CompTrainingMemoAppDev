@@ -100,53 +100,42 @@ window.onkeydown = keydown;
   <form id="form" @submit.prevent="sendEmail" class="h-full w-full">
     <!-- Name input -->
     <div class="relative mb-6" data-te-input-wrapper-init>
+      <label for="name" class="block text-sm font-medium text-gray-700">お名前 </label>
       <input
         type="text"
-        class="peer block min-h-[auto] w-full rounded border bg-transparent px-3 py-[0.32rem] leading-[2.15] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
+        class="mt-1 p-2 w-full border rounded-md border-gray-300 focus:border-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300"
         id="name"
         v-model="form.name"
         placeholder="お名前"
       />
-      <label
-        for="name"
-        class="pointer-events-none absolute duration-300 bg-white scale-[0.8] transform -translate-y-[1.15rem] top-2 origin-[0] text-neutral-500 px-2 peer-focus:px-2 peer-focus:text-primary peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-[0.8] peer-focus:-translate-y-[1.15rem] left-1 dark:text-neutral-200 dark:peer-focus:text-primary"
-        >お名前
-      </label>
     </div>
 
     <!-- Email input -->
     <div class="relative mb-6" data-te-input-wrapper-init>
+      <label for="email" class="block text-sm font-medium text-gray-700"
+        >メールアドレス<span class="text-sm text-red-600">(※必須)</span>
+      </label>
       <input
         type="text"
-        class="peer block min-h-[auto] w-full rounded border bg-transparent px-3 py-[0.32rem] leading-[2.15] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
+        class="mt-1 p-2 w-full border rounded-md border-gray-300 focus:border-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300"
         id="email"
         v-model="form.email"
         placeholder="メールアドレス"
       />
-      <label
-        for="email"
-        class="pointer-events-none absolute duration-300 bg-white scale-[0.8] transform -translate-y-[1.15rem] top-2 origin-[0] text-neutral-500 px-2 peer-focus:px-2 peer-focus:text-primary peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-[0.8] peer-focus:-translate-y-[1.15rem] left-1 dark:text-neutral-200 dark:peer-focus:text-primary"
-        >メールアドレス<span class="text-sm text-red-600">(※必須)</span>
-      </label>
       <p :class="dispEmailErrMsg">{{ errors.email[0] }}</p>
     </div>
 
     <!-- content input -->
-    <p class="text-sm text-center italic mt-6 mb-3 md:mb-0">
-      追加してほしい機能や相談ごとなど承ります
-    </p>
     <div class="relative h-2/3 mb-6" data-te-input-wrapper-init>
+      <label for="content" class="block text-sm font-medium text-gray-700"
+        >お問い合わせ内容<span class="text-sm text-red-600">(※必須)</span>
+      </label>
       <textarea
-        class="peer block h-full w-full rounded border bg-transparent px-3 py-[0.32rem] leading-[2.15] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
+        class="mt-1 p-2 w-full h-full border rounded-md border-gray-300 focus:border-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300"
         id="content"
         v-model="form.content"
         placeholder="追加してほしい機能や相談ごとなど承ります"
       />
-      <label
-        for="content"
-        class="pointer-events-none absolute duration-300 bg-white scale-[0.8] transform -translate-y-[1.15rem] top-2 origin-[0] text-neutral-500 px-2 peer-focus:px-2 peer-focus:text-primary peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/3 peer-focus:top-2 peer-focus:scale-[0.8] peer-focus:-translate-y-[1.15rem] left-1 dark:text-neutral-200 dark:peer-focus:text-primary"
-        >お問い合わせ内容<span class="text-sm text-red-600">(※必須)</span>
-      </label>
       <p :class="dispContentErrMsg">{{ errors.content[0] }}</p>
     </div>
 

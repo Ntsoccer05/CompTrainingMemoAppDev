@@ -126,7 +126,7 @@
 
 <script setup>
 import { ref, onMounted, computed } from "vue";
-import { useRoute, onBeforeRouteLeave } from "vue-router";
+import { useRoute, useRouter, onBeforeRouteLeave } from "vue-router";
 import { useStore } from "vuex";
 import useGetRecordState from "../../composables/record/useGetRecordState";
 import useGetLoginUser from "../../composables/certification/useGetLoginUser.js";
@@ -137,6 +137,7 @@ import HistoryRecordContents from "./HistoryRecordContents.vue";
 import useGetHistoryRecordContent from "../../composables/record/useGetHistoryRecordContent.js";
     const route = useRoute();
     const store = useStore();
+    const router = useRouter();
 
     const hasOneHand = ref(false);
 

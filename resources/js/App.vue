@@ -36,6 +36,10 @@ select:-webkit-autofill {
   box-shadow: 0 0 0 1000px white inset !important;
   -webkit-text-fill-color: black !important;
 }
+input[type="text"],
+textarea {
+  -webkit-appearance: none;
+}
 </style>
 
 // 以下で指定しているstyleはModalのため動的に追加される要素であるためdeepを指定

@@ -2,58 +2,52 @@
   <form @submit.prevent="register">
     <!-- UserName input -->
     <div class="relative mb-6" data-te-input-wrapper-init>
+      <label for="username" class="block text-sm font-medium text-gray-700"
+        >ユーザ名<span class="text-sm text-black-600">(※任意)</span>
+      </label>
       <input
         type="text"
-        class="peer block min-h-[auto] w-full rounded border bg-transparent px-3 py-[0.32rem] leading-[2.15] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
+        class="mt-1 p-2 w-full border rounded-md focus:border-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300"
         id="username"
         placeholder="ユーザ名"
         v-model="name"
       />
-      <label
-        for="username"
-        class="pointer-events-none absolute duration-300 bg-white scale-[0.8] transform -translate-y-[1.15rem] top-2 origin-[0] text-neutral-500 px-2 peer-focus:px-2 peer-focus:text-primary peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-[0.8] peer-focus:-translate-y-[1.15rem] left-1 dark:text-neutral-200 dark:peer-focus:text-primary"
-        >ユーザ名<span class="text-sm text-black-600">(※任意)</span>
-      </label>
       <p :class="dispNameErrMsg">{{ errors.name[0] }}</p>
     </div>
 
     <!-- Email input -->
     <div class="relative mb-6" data-te-input-wrapper-init>
+      <label for="email" class="block text-sm font-medium text-gray-700"
+        >メールアドレス
+      </label>
       <input
         type="text"
-        class="peer block min-h-[auto] w-full rounded border bg-transparent px-3 py-[0.32rem] leading-[2.15] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
+        class="mt-1 p-2 w-full border rounded-md focus:border-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300"
         id="email"
         placeholder="メールアドレス"
         v-model="email"
-	required
+        required
       />
-      <label
-        for="email"
-        class="pointer-events-none absolute duration-300 bg-white scale-[0.8] transform -translate-y-[1.15rem] top-2 origin-[0] text-neutral-500 px-2 peer-focus:px-2 peer-focus:text-primary peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-[0.8] peer-focus:-translate-y-[1.15rem] left-1 dark:text-neutral-200 dark:peer-focus:text-primary"
-        >メールアドレス
-      </label>
       <p :class="dispEmailErrMsg">{{ errors.email[0] }}</p>
     </div>
 
     <!-- Password input -->
     <div class="relative mb-6" data-te-input-wrapper-init>
+      <label class="block text-sm font-medium text-gray-700" for="password"
+        >パスワード
+      </label>
       <input
         :type="inputType"
-        class="peer block min-h-[auto] w-full rounded border bg-transparent px-3 py-[0.32rem] leading-[2.15] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
+        class="mt-1 p-2 w-full border rounded-md focus:border-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300"
         id="password"
         placeholder="パスワード"
         v-model="password"
-	required
+        required
       />
       <label
-        for="password"
-        class="pointer-events-none absolute duration-300 bg-white scale-[0.8] transform -translate-y-[1.15rem] top-2 origin-[0] text-neutral-500 px-2 peer-focus:px-2 peer-focus:text-primary peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/3 peer-focus:top-2 peer-focus:scale-[0.8] peer-focus:-translate-y-[1.15rem] left-1 dark:text-neutral-200 dark:peer-focus:text-primary"
-        >パスワード
+        ><input type="checkbox" v-model="displayPass" class="mr-1 mt-2" />パスワードを表示する
       </label>
-      <label
-        ><input type="checkbox" v-model="displayPass" class="mr-1" />パスワードを表示する
-      </label>
-      <div class="absolute top-3 text-right w-11/12 pointer-events-none">
+      <div class="absolute top-8.5 text-right w-11/12 pointer-events-none">
         <span class="pointer-events-auto"
           ><i :class="iconType" @click="toggleDisplayPass"></i
         ></span>
