@@ -9,7 +9,7 @@
         type="text"
         class="mt-1 p-2 w-full border rounded-md focus:border-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300"
         id="username"
-        placeholder="ユーザ名"
+        placeholder=""
         v-model="name"
       />
       <p :class="dispNameErrMsg">{{ errors.name[0] }}</p>
@@ -24,7 +24,7 @@
         type="text"
         class="mt-1 p-2 w-full border rounded-md focus:border-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300"
         id="email"
-        placeholder="メールアドレス"
+        placeholder=""
         v-model="email"
         readonly
       />

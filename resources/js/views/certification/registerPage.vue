@@ -18,9 +18,9 @@
           <Register />
           <!-- Divider -->
           <div
-            class="my-4 flex items-center before:mt-0.5 before:flex-1 before:border-t before:border-neutral-300 after:mt-0.5 after:flex-1 after:border-t after:border-neutral-300"
+            class="my-4 flex items-center before:mt-0.5 before:flex-1 before:border-t before:border-neutral-600 after:mt-0.5 after:flex-1 after:border-t after:border-neutral-600"
           >
-            <p class="mx-4 mb-0 text-center font-semibold dark:text-neutral-200">OR</p>
+            <p class="mx-4 mb-0 text-center font-semibold dark:text-neutral-600">OR</p>
           </div>
 
           <!-- Social login buttons -->
@@ -30,9 +30,9 @@
           <div class="pb-6 mt-12">
             <!-- Divider -->
             <div
-              class="my-4 flex items-center before:mt-0.5 before:flex-1 before:border-t before:border-neutral-300 after:mt-0.5 after:flex-1 after:border-t after:border-neutral-300"
+              class="my-4 flex items-center before:mt-0.5 before:flex-1 before:border-t before:border-neutral-600 after:mt-0.5 after:flex-1 after:border-t after:border-neutral-600"
             >
-              <p class="mx-4 mb-0 text-center font-semibold dark:text-neutral-200">
+              <p class="mx-4 mb-0 text-center font-semibold dark:text-neutral-600">
                 登録済みの方は
               </p>
             </div>

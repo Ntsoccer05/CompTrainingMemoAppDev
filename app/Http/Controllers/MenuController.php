@@ -134,7 +134,7 @@ class MenuController extends Controller
         $menu_id = $request ->menu_id;
         $menulist = Menu::where(function($query) use($user_id, $category_id, $menu_id){
             $query->where([['user_id', $user_id],['category_id', $category_id],['id', $menu_id]]);
-        })->first()->load('content');
+        })->first();
         If($menulist){
             $menulist->content = $request->content;
             $menulist->save();

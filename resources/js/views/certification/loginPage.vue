@@ -21,9 +21,8 @@
 
           <!-- Divider -->
           <div
-            class="my-4 flex items-center before:mt-0.5 before:flex-1 before:border-t before:border-neutral-300 after:mt-0.5 after:flex-1 after:border-t after:border-neutral-300"
-          >
-            <p class="mx-4 mb-0 text-center font-semibold dark:text-neutral-200">OR</p>
+            class="my-4 flex items-center before:mt-0.5 before:flex-1 before:border-t before:border-gray-600 after:mt-0.5 after:flex-1 after:border-t after:border-neutral-600">
+            <p class="mx-4 mb-0 text-center font-semibold dark:text-neutral-600">OR</p>
           </div>
 
           <SocialLogin />
@@ -32,9 +31,8 @@
           <div class="pb-6 mt-6 md:mt-12">
             <!-- Divider -->
             <div
-              class="my-4 flex items-center before:mt-0.5 before:flex-1 before:border-t before:border-neutral-300 after:mt-0.5 after:flex-1 after:border-t after:border-neutral-300"
-            >
-              <p class="mx-4 mb-0 text-center font-semibold dark:text-neutral-200">
+              class="my-4 flex items-center before:mt-0.5 before:flex-1 before:border-t before:border-gray-600 after:mt-0.5 after:flex-1 after:border-t after:border-neutral-600">
+	      <p class="mx-4 mb-0 text-center font-semibold dark:text-neutral-600">
                 アカウントがない方は
               </p>
             </div>
