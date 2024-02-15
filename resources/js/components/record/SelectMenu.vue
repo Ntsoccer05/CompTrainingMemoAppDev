@@ -192,7 +192,6 @@ export default {
           },
         })
         .then((res) => {
-	  store.commit("compGetData", true);
           //編集画面でなければ
           if (!editable.value) {
             if (res.data.categories.length === 0) {
@@ -281,15 +280,19 @@ export default {
       if (dispModal.value) {
         dispAlertModal.value = true;
       }
+      if (route.params.recordId) {
+        await getRecords(loginUser.value.id, recorded_day).then((res) => {
+          store.commit("compGetData", true);
+        });
+      } else if (loginUser.value.id) {
+        await getRecords(loginUser.value.id).then((res) => {
+          store.commit("compGetData", true);
+        });
+      }
       await getLatestRecordState();
       await getMenus();
       if (latestRecord.value.bodyWeight) {
         weight.value = latestRecord.value.bodyWeight;
-      }
-      if (route.params.recordId) {
-        await getRecords(loginUser.value.id, recorded_day);
-      } else if (loginUser.value.id) {
-        await getRecords(loginUser.value.id);
       }
     });
 
