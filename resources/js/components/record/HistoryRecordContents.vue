@@ -7,7 +7,15 @@
           <tr>
             <th class="text-center bg-green-400 indent-1 md:indent-0">
               <div class="border" ref="todayRecordedAt">
-                {{ historyMenu.recorded_at }}の記録
+                <span class="border-r-2 border-black text-sm xs:text-base">
+                  {{ historyMenu.recorded_at }}の記録
+                </span>
+                <span class="ml-1 text-sm xs:text-base"
+                  >体重:
+                  <template v-if="historyMenu.record_state.bodyWeight">
+                    {{ historyMenu.record_state.bodyWeight }}kg
+                  </template>
+                </span>
               </div>
             </th>
           </tr>

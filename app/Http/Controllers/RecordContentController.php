@@ -129,8 +129,8 @@ class RecordContentController extends Controller
         $recorded_at = $request->recorded_at;
 
         $historyTgtMenus = $recordMenu->where(function($query) use($user_id, $category_id, $menu_id, $recorded_at){
-            $query->where([['user_id', $user_id], ['category_id', $category_id], ['menu_id', $menu_id], ['recorded_at', '<>', $recorded_at]]);
-        })->orderBy('recorded_at', 'desc')->take(5)->get();
+            $query->where([['user_id', $user_id], ['category_id', $category_id], ['menu_id', $menu_id], ['recorded_at', '<', $recorded_at]]);
+        })->orderBy('recorded_at', 'desc')->take(5)->get()->load('recordState:id,bodyWeight');
 
         if($historyTgtMenus){
             foreach($historyTgtMenus as $historyTgtMenu){
