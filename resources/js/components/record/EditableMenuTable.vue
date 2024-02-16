@@ -55,7 +55,7 @@
             :class="[
               'border cursor-pointer',
               dataMenu.indexOf(menu.id) > -1 && !editable
-                ? 'bg-green-400 hover:bg-green-600'
+                ? 'bg-green-400 hover:bg-green-200'
                 : 'hover:bg-gray-200',
               editable ? '' : '',
             ]"
@@ -73,7 +73,7 @@
                 :class="[
                   'border-2 col-span-11',
                   dataMenu.indexOf(menu.id) > -1
-                    ? 'bg-green-400 hover:bg-green-600'
+                    ? 'bg-green-400 hover:bg-green-200'
                     : 'hover:bg-gray-200',
                 ]"
               />

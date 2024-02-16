@@ -58,6 +58,14 @@ onMounted(async () => {
     <p class="mx-auto mt-10 md:w-6/12 w-11/12 mb-5 font-bold md:text-center">
       メニュー別の最高重量、最高ボリュームを表示しています。
     </p>
+    <div class="text-right mx-auto w-11/12 md:w-6/12">
+      <i class="fa-solid fa-minus text-red-500 text-xl"></i>
+      <span class="text-lg">：部位</span>
+    </div>
+    <div class="text-right mx-auto w-11/12 md:w-6/12">
+      <i class="fa-solid fa-minus text-blue-500 text-xl"></i>
+      <span class="text-lg">：種目</span>
+    </div>
     <template v-if="compGetData">
       <userRecordRankingTable
         :ranking_contents="rankingContents"
