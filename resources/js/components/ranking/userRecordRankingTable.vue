@@ -16,13 +16,13 @@ const categoryContents = computed(() => props.category_contents);
       :key="index"
       class="mx-auto mt-3 md:w-6/12 w-11/12 text-center"
     >
-      <p class="text-lg font-boldi bg-red-500">{{ categoryContent }}</p>
+      <p class="text-lg font-boldi bg-red-400">{{ categoryContent }}</p>
       <div v-for="dispContent in dispContents" :key="dispContent.menu">
         <template v-if="categoryContent === dispContent.category.content">
           <table class="border border-collapse table-fixed mx-auto w-full mt-3">
             <thead class="block border">
               <tr class="mx-auto w-full grid">
-                <th class="text-center bg-blue-500">
+                <th class="text-center bg-blue-200">
                   {{ dispContent.menu.content }}
                 </th>
               </tr>
