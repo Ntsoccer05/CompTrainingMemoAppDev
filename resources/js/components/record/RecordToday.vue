@@ -1,4 +1,7 @@
 <template>
+  <p class="text-red-500 sm:text-center font-bold text-lg mb-5" v-if="loginUser.id">
+      ※記録なし、セット数０のデータは毎朝４時に削除されます
+  </p>
   <form @submit.prevent="record">
     <button
       type="submit"
@@ -89,6 +92,7 @@ export default {
       recordingDay,
       dispAlertModal,
       loginUser,
+      isLogined,
       toSelectMenu,
       record,
       alertLogin,

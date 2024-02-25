@@ -180,13 +180,13 @@ class RecordContentController extends Controller
                     $tgtRecordContent->left_rep = $request->left_rep;
                     $tgtRecordContent->set = $request->set;
                     $tgtRecordContent->rep = $request->rep;
-                    if($tgtMenu->oneSide === 0 && $request->weight && $request->rep){
+                    if($tgtMenu->oneSide === 0 && ($request->weight || $request->rep)){
                         $tgtRecordContent->volume = $request->weight * $request->rep;
                     }
-                    if($tgtMenu->oneSide === 1 && $request->right_weight && $request->right_rep){
+                    if($tgtMenu->oneSide === 1 && ($request->right_weight || $request->right_rep)){
                         $tgtRecordContent->right_volume = $request->right_weight * $request->right_rep;
                     }
-                    if($tgtMenu->oneSide === 1 && $request->left_weight && $request->left_rep){
+                    if($tgtMenu->oneSide === 1 && ($request->left_weight || $request->left_rep)){
                         $tgtRecordContent->left_volume = $request->left_weight * $request->left_rep;
                     }
                     $tgtRecordContent->memo = $request->memo;
@@ -246,13 +246,13 @@ class RecordContentController extends Controller
             $recordContent->left_rep = $request->left_rep;
             $recordContent->set = $request->set;
             $recordContent->rep = $request->rep;
-            if($tgtMenu->oneSide === 0 && $request->weight && $request->rep){
+            if($tgtMenu->oneSide === 0 && ($request->weight || $request->rep)){
                 $recordContent->volume = $request->weight * $request->rep;
             }
-            if($tgtMenu->oneSide === 1 && $request->right_weight && $request->right_rep){
+            if($tgtMenu->oneSide === 1 && ($request->right_weight || $request->right_rep)){
                 $recordContent->right_volume = $request->right_weight * $request->right_rep;
             }
-            if($tgtMenu->oneSide === 1 && $request->left_weight && $request->left_rep){
+            if($tgtMenu->oneSide === 1 && ($request->left_weight || $request->left_rep)){
                 $recordContent->left_volume = $request->left_weight * $request->left_rep;
             }
             $recordContent->memo = $request->memo;
