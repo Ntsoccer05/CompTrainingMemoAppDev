@@ -34,10 +34,10 @@ class RecordContentResource extends Resource
                     ->relationship('category', 'id'),
                 Forms\Components\Select::make('menu_id')
                     ->relationship('menu', 'id'),
-                Forms\Components\TextInput::make('weight'),
-                Forms\Components\TextInput::make('right_weight'),
+                Forms\Components\TextInput::make('weight')->searchable(),
+                Forms\Components\TextInput::make('right_weight')->searchable(),
                 Forms\Components\TextInput::make('right_rep'),
-                Forms\Components\TextInput::make('left_weight'),
+                Forms\Components\TextInput::make('left_weight')->searchable(),
                 Forms\Components\TextInput::make('left_rep'),
                 Forms\Components\TextInput::make('volume'),
                 Forms\Components\TextInput::make('right_volume'),
@@ -54,25 +54,25 @@ class RecordContentResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('user.name'),
-                Tables\Columns\TextColumn::make('recordState.id'),
+                Tables\Columns\TextColumn::make('recordState.id')->sortable(),
                 Tables\Columns\TextColumn::make('recordMenu.id'),
                 Tables\Columns\TextColumn::make('category.id'),
                 Tables\Columns\TextColumn::make('menu.id'),
-                Tables\Columns\TextColumn::make('weight'),
-                Tables\Columns\TextColumn::make('right_weight'),
+                Tables\Columns\TextColumn::make('weight')->sortable(),
+                Tables\Columns\TextColumn::make('right_weight')->sortable(),
                 Tables\Columns\TextColumn::make('right_rep'),
-                Tables\Columns\TextColumn::make('left_weight'),
+                Tables\Columns\TextColumn::make('left_weight')->sortable(),
                 Tables\Columns\TextColumn::make('left_rep'),
-                Tables\Columns\TextColumn::make('volume'),
-                Tables\Columns\TextColumn::make('right_volume'),
-                Tables\Columns\TextColumn::make('left_volume'),
+                Tables\Columns\TextColumn::make('volume')->sortable(),
+                Tables\Columns\TextColumn::make('right_volume')->sortable(),
+                Tables\Columns\TextColumn::make('left_volume')->sortable(),
                 Tables\Columns\TextColumn::make('set'),
                 Tables\Columns\TextColumn::make('rep'),
-                Tables\Columns\TextColumn::make('memo'),
+                Tables\Columns\TextColumn::make('memo')->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime('Y年Md日 h:m:s'),
                 Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime('Y年Md日 h:m:s'),
+                    ->dateTime('Y年Md日 h:m:s')->sortable(),
             ])
             ->filters([
                 //
