@@ -39,11 +39,11 @@ class RecordStateResource extends Resource
                 Tables\Columns\TextColumn::make('user.name'),
                 Tables\Columns\TextColumn::make('bodyWeight'),
                 Tables\Columns\TextColumn::make('recorded_at')
-                    ->date('Y年Md日'),
+                    ->date('Y年Md日')->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime('Y年Md日 h:m:s'),
                 Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime('Y年Md日 h:m:s'),
+                    ->dateTime('Y年Md日 h:m:s')->sortable(),
             ])
             ->filters([
                 //
