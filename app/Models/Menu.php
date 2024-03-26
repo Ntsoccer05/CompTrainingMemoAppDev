@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Menu extends Model
 {
     use HasFactory;
+    protected $fillable = ['user_id'];
 
     public function category():BelongsTo
     {
