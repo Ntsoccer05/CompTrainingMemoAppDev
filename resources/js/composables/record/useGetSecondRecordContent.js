@@ -1,4 +1,5 @@
 import { ref } from "vue";
+
 import axios from "axios";
 
 export default function useGetSecondRecordContent(user_id, category_id, menu_id, record_state_id, recorded_at){
@@ -9,7 +10,7 @@ export default function useGetSecondRecordContent(user_id, category_id, menu_id,
 
     //２番目に新しい記録を取得する
     const getSecondRecord = async(user_id, category_id, menu_id, record_state_id, recorded_at, thisTotalSet)=>{
-        await axios.get("/api/recordMenu", {
+	await axios.get("/api/recordMenu", {
             // get時にパラメータを渡す際はparamsで指定が必要
             params:{
                 // keyとvalueが同じためuser_id:user_idの「:user_id」を省略できる

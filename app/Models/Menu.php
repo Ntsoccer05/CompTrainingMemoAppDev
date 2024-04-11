@@ -11,7 +11,12 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Menu extends Model
 {
     use HasFactory;
-    protected $fillable = ['user_id'];
+    protected $fillable = ['user_id', 'content', 'category_id', 'oneSide'];
+
+    public function user():BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
 
     public function category():BelongsTo
     {

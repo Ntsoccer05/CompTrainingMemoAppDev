@@ -498,6 +498,9 @@ export default {
         props.menu_id,
         props.record_state_id
       );
+      if (tgtRecord.value.length == 0) {
+        emit("totalSet", "0");
+      }
       store.commit("compGetData", true);
     });
 

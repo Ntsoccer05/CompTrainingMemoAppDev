@@ -25,6 +25,7 @@ export default function useGetTgtRecordContents(user_id, category_id, menu_id, r
             }else{
                 hasTgtRecord.value = false
             }
+	    //hasTgtRecord.value = true
         }).catch((err)=>{
             useNotLoginedRedirect(err);
         })
