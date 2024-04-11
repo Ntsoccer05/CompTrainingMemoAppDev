@@ -238,7 +238,7 @@ import useGetHistoryRecordContent from "../../composables/record/useGetHistoryRe
         menu_id,
         record_state_id,
         route.params.recordId,
-        thisTotalSet
+        thisTotalSet.value
       );
       if (hasSecondRecord.value) {
         isBeforeData.value = true;
@@ -330,25 +330,25 @@ const firstRecord = async () => {
       if (dispModal.value) {
         dispAlertModal.value = true;
       }
-      await firstRecord();
+      // await firstRecord();
       await getLatestRecordState();
       await getMenuContent();
       await getTgtRecords(loginUser.value.id, category_id, menu_id, record_state_id);
-      if (hasTgtRecord.value) {
+      //if (hasTgtRecord.value) {
         BeforeBtnTxt.value = "前回の記録を埋める";
 	BeforeWeightTxt.value = "前回の体重";
         BeforeTotalSetTxt.value = "前回の合計セット数";
         BeforeHeaderTxt.value = "前回の記録";
         isDispTxt.value = false;
         compGetData.value = true;
-      } else {
+      //} else {
         // BeforeBtnTxt.value = "前々回の記録を埋める";
         // BeforeWeightTxt.value = "前々回の体重";
         // BeforeTotalSetTxt.value = "前々回の合計セット数";
         // BeforeHeaderTxt.value = "前々回の記録";
         // isDispTxt.value = true;
         // compGetData.value = true;
-      }
+      //}
       const fillBeforeBtnDom = fillBeforeBtn.value;
 
       if (latestRecord.value.bodyWeight) {
@@ -359,18 +359,18 @@ const firstRecord = async () => {
     });
 
     //遷移前処理
-onBeforeRouteLeave(async (to, from, next) => {
-  if (to.name === "selectMenu") {
-    if (thisTotalSet.value === 0) {
-      await deleteFirstRecord();
-      next();
-    } else {
-      next();
-    }
-  } else {
-    next();
-  }
-});
+//onBeforeRouteLeave(async (to, from, next) => {
+  //if (to.name === "selectMenu") {
+    //if (thisTotalSet.value === 0) {
+      //await deleteFirstRecord();
+      //next();
+    //} else {
+      //next();
+    //}
+  //} else {
+    //next();
+  //}
+//});
 
 </script>
 

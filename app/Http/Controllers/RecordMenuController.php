@@ -19,11 +19,11 @@ class RecordMenuController extends Controller
 	if($request->thisTotalSet){
             $secondRecordState = $recordMenu->where(function($query) use($user_id, $category_id, $menu_id, $record_state_id, $recorded_at){
                 $query->where([['user_id', $user_id], ['category_id', $category_id], ['menu_id', $menu_id]])->whereDate('recorded_at' ,'<=', $recorded_at);
-            // offset(数)←先頭から引数の数だけ飛ばす
+                // offset(数)←先頭から引数の数だけ飛ばす
             })->orderBy('recorded_at', 'desc')->offset(1)->first();
-	}else{
+        }else{
             $secondRecordState = $recordMenu->where(function($query) use($user_id, $category_id, $menu_id, $record_state_id, $recorded_at){
-                $query->where([['user_id', $user_id], ['category_id', $category_id], ['menu_id', $menu_id]])->whereDate('recorded_at' ,'<=', $recorded_at);
+                $query->where([['user_id', $user_id], ['category_id', $category_id], ['menu_id', $menu_id]])->whereDate('recorded_at' ,'<', $recorded_at);
                 // offset(数)←先頭から引数の数だけ飛ばす
             })->orderBy('recorded_at', 'desc')->first();
         }

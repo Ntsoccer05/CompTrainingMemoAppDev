@@ -23,7 +23,7 @@ class MenuResource extends Resource
     {
         return $form
             ->schema([
-		Forms\Components\TextInput::make('user_id')
+		Forms\Components\Select::make('user_id')
 		    ->relationship('user', 'id')
                     ->required(),
                 Forms\Components\Select::make('category_id')
@@ -41,8 +41,8 @@ class MenuResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('user_id'),
-                Tables\Columns\TextColumn::make('category.id'),
+                Tables\Columns\TextColumn::make('user.name'),
+                Tables\Columns\TextColumn::make('category.content'),
                 Tables\Columns\TextColumn::make('content'),
                 Tables\Columns\IconColumn::make('oneSide')
                     ->boolean(),
