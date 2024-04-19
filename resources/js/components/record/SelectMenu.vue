@@ -79,7 +79,7 @@
 
 <script>
 import EditableMenuTable from "./EditableMenuTable.vue";
-import { ref, onMounted, watch, computed } from "vue";
+import { ref, onMounted, watch, computed, nextTick } from "vue";
 import { useStore } from "vuex";
 import { useRoute, useRouter, onBeforeRouteLeave } from "vue-router";
 import useGetLoginUser from "../../composables/certification/useGetLoginUser.js";
@@ -119,6 +119,11 @@ export default {
     const dispAlertModal = ref(false);
 
     const recorded_at = ref("");
+
+    // レコード画面から戻った際に選択したメニューまでスクロール処理
+    const fromPath = ref("");
+    const currentPath = ref("");
+    const scrollTop = ref(0);
 
     const { getLoginUser, loginUser } = useGetLoginUser();
 
@@ -271,6 +276,36 @@ export default {
       return val;
     };
 
+    // レコード画面から戻った際に選択したメニューまでスクロール処理
+    const menuScroll = () => {
+      // 前画面パスを設定
+      if (window.history.state.forward) {
+        fromPath.value = window.history.state.forward.split("/")[1];
+      } else if (window.history.state.back) {
+        fromPath.value = window.history.state.back.split("/")[1];
+      }
+      // 現在画面パスを設定
+      currentPath.value = window.history.state.current.split("/")[1];
+      // スクロール位置を設定
+      if (sessionStorage.getItem("OffsetTop")) {
+        scrollTop.value = Number(sessionStorage.getItem("OffsetTop"));
+        sessionStorage.removeItem("OffsetTop");
+      } else {
+        scrollTop.value = 0;
+      }
+
+      if (
+        fromPath.value === "record" &&
+        currentPath.value === "selectMenu" &&
+        scrollTop.value > 0
+      ) {
+        nextTick(() => {
+          // レコード画面から戻った際に選択したメニューまでスクロール処理
+          window.scrollTo(0, scrollTop.value);
+        });
+      }
+    };
+
     onMounted(async () => {
       // DOM取得のため
       const deleteFuncDom = deleteFunc.value;
@@ -292,8 +327,11 @@ export default {
       await getLatestRecordState();
       await getMenus();
       if (latestRecord.value.bodyWeight) {
-        weight.value = latestRecord.value.bodyWeight;
+        weight.value = latestRecord.value.bodyWeight;      
       }
+
+      // レコード画面から戻った際に選択したメニューまでスクロール処理
+      menuScroll();
     });
 
     //遷移前処理
@@ -320,6 +358,10 @@ export default {
         } else {
           next();
         }
+      } else if (to.name === "record") {
+        // レコード画面へ遷移時現在のスクロール位置を保存
+        sessionStorage.setItem("OffsetTop", String(window.scrollY));
+        next();
       } else {
         next();
       }
