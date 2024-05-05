@@ -15,7 +15,7 @@
     </thead>
     <tbody>
       <tr v-for="index in maxSet" :key="index">
-        <td>
+        <td @keyup.enter="nextInputFocus($event)">
           <div class="bg-gray-200 border indent-1">{{ index + 1 }}セット目</div>
           <div :class="hasOneHand ? 'hidden' : 'block'">
             <!-- changeだとfocusが外れた時、inputは入力したとき -->
@@ -238,35 +238,6 @@ import useGetTgtRecordContent from "../../composables/record/useGetTgtRecordCont
 import axios from "axios";
 import { useStore } from "vuex";
 
-// エンターキーを押すと次の要素入力可
-function keydown(e) {
-  if (e.keyCode === 13) {
-    var obj = document.activeElement;
-    if (obj.nextElementSibling) {
-      obj.nextElementSibling.focus();
-    } else if (obj.parentNode.nextSibling) {
-      if (obj.parentNode.nextSibling.children) {
-        if (obj.parentNode.nextSibling.children[0].nodeName == "TEXTAREA") {
-          obj.parentNode.nextSibling.children[0].focus();
-        }
-        if (obj.parentNode.nextSibling.children[2]) {
-          if (obj.parentNode.nextSibling.children[2].parentNode.nextSibling.children) {
-            if (
-              obj.parentNode.nextSibling.children[2].parentNode.nextSibling.children[0]
-                .nodeName == "TEXTAREA"
-            ) {
-              obj.parentNode.nextSibling.children[2].parentNode.nextSibling.children[0].focus();
-              // 1行目指定のため(無いと2行目指定となる)
-              e.returnValue = false;
-            }
-          }
-        }
-      }
-    }
-  }
-}
-
-window.onkeydown = keydown;
 export default {
   props: {
     second_record: [Object, String],
@@ -490,6 +461,42 @@ export default {
       }
     });
 
+    // エンターキーを押すと次の入力要素フォーカス
+    const nextInputFocus = (e) => {
+      const inputTags = e.currentTarget.querySelectorAll("input");
+      const textareaTags = e.currentTarget.querySelectorAll(
+        "textarea"
+      );
+
+      for (let index = 0; index <= inputTags.length - 1; index++) {
+        //通常の場合
+        if (index === 0 && inputTags[index] === document.activeElement) {
+          // インプットエリアにフォーカス
+          inputTags[index + 1].focus();
+          break;
+        } else if (index === 1 && inputTags[index] === document.activeElement) {
+          // テキストエリアにフォーカス
+          textareaTags[0].focus();
+          break;
+        } else if (
+          2 <= index &&
+          index < inputTags.length - 1 &&
+          inputTags[index] === document.activeElement
+        ) {
+          // 片方ずつ記録する場合
+          inputTags[index + 1].focus();
+          break;
+        } else if (
+          index === inputTags.length - 1 &&
+          inputTags[index] === document.activeElement
+        ) {
+          // テキストエリアにフォーカス
+          textareaTags[0].focus();
+          break;
+        }
+      }
+    };
+
     onMounted(async () => {
       await getLoginUser();
       await getTgtRecords(
@@ -580,6 +587,7 @@ export default {
       validateDecimalNumber,
       postRecordContent,
       complementData,
+　　　nextInputFocus,
     };
   },
 };

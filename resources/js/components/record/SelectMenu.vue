@@ -301,7 +301,11 @@ export default {
       ) {
         nextTick(() => {
           // レコード画面から戻った際に選択したメニューまでスクロール処理
-          window.scrollTo(0, scrollTop.value);
+          window.scrollTo({
+            top: scrollTop.value,
+            left: 0,
+            behavior: "smooth",
+          });
         });
       }
     };
