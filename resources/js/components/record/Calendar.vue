@@ -38,6 +38,10 @@ const calendar = ref(null);
 
 const selected_day = ref(null);
 
+// 選択された月日へ移動
+const fromPath = ref("");
+const currentPath = ref("");
+
 const { getLoginUser, loginUser } = useGetLoginUser();
 
 const { records, compGetData, getRecords } = useGetRecords();
@@ -99,6 +103,37 @@ const changeDayFormat = (day) => {
   return day;
 };
 
+// 選択された月日へ移動
+const menuScroll = (calendarDom) => {
+  // 前画面パスを設定
+  if (window.history.state.forward) {
+    fromPath.value = window.history.state.forward.split("/")[2];
+  } else if (window.history.state.back) {
+    fromPath.value = window.history.state.back.split("/")[2];
+  }
+  const day = ref(null);
+  day.value = new Date(fromPath.value);
+  // 現在画面パスを設定
+  currentPath.value = window.history.state.current.split("/")[1];
+  // クエリパラメータに選択されていたdateを指定することで移動
+  if (!Number.isNaN(day.value.getDate())) {
+    // safariだと年-月-日だとNanとなるため年/月/日に変更してから移動処理
+    calendarDom.move(new Date((fromPath.value).replace(/-/g, "/")));
+    // 選択された日付のクエリパラメータを付与
+    router.push({ name: "home", query: { day: fromPath.value } });
+    // 選択された日付をマーク
+    const obj = {
+      key: "selected_day",
+      highlight: "green",
+      // safariだと年-月-日だとNanとなるため年/月/日に変更
+      dates: new Date(fromPath.value.replace(/-/g, "/")),
+    };
+    attrs.value = [...attrs.value, obj];
+  } else {
+    router.push({ name: "home", query: { day: fromPath.value } });
+  }
+};
+
 //ログインしているかの判別をする場合DOMが生成されていない状態だとログイン状態を判別できないため
 //getLoginUser はApp.vueで行う
 onMounted(async () => {
@@ -119,12 +154,9 @@ onMounted(async () => {
     isLogined.value = computed(() => store.state.isLogined);
 
     toDetailPage();
-    // クエリパラメータがあればリロード時にその日付が存在するページを表示
-    if (route.query.day) {
-      // safariだと年-月-日だとNanとなるため年/月/日に変更
-      calendarDom.move(new Date((route.query.day).replace(/-/g, "/")));
-      delete route.query.day;
-    }
+
+    // 選択された月日へ移動
+    menuScroll(calendarDom);
   });
 });
 
