@@ -5,6 +5,7 @@ import useNotLoginedRedirect from "../certification/useNotLoginedRedirect";
 export default function useGetRecords(){
     const records = ref("");
     const compGetData = ref(false);
+    const isLoaded = ref(false);
     
     const getRecords = async(user_id, recorded_at="")=>{
         await axios.get("/api/recordContent", {
@@ -17,10 +18,12 @@ export default function useGetRecords(){
         }).then((res) =>{
             records.value = res.data.records
             compGetData.value = true
+	    isLoaded.value = true;
 	}).catch((err)=>{
             useNotLoginedRedirect(err);
+	    isLoaded.value = true;
         })
     }
 
-    return{records, compGetData, getRecords}
+    return{records, compGetData, isLoaded, getRecords}
 }
