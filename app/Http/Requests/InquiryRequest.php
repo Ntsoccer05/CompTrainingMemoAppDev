@@ -27,7 +27,7 @@ class InquiryRequest extends FormRequest
     {
         return [
             'name' => 'nullable',
-            'email' => 'required|email',
+            'email' => 'required|email:strict,dns,spoof',
             'content' => 'required',
         ];
     }
@@ -36,9 +36,9 @@ class InquiryRequest extends FormRequest
     {
         // :attributeはemailはメールアドレス、contentはお問い合わせ内容となる
         return [
-            'email.required' => ':attributeは必ず指定してください。',
-            'email.email' => '正しい:attributeを指定してください。',
-            'content.required' => ':attributeは必ず指定してください。',
+            'email.required' => ':attributeは必ず入力してください。',
+            'email.email' => '正しい:attributeを入力してください。',
+            'content.required' => ':attributeは必ず入力してください。',
         ];
     }
 

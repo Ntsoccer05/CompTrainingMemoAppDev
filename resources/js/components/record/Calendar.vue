@@ -22,9 +22,6 @@ const attrs = ref([{ key: "today", highlight: true, dates: new Date() }]);
 const holidays = ref([]);
 const data = ref([]);
 
-// データ取得完了したかどうか
-const isLoaded = ref(false);
-
 const dispAlertModal = ref(false);
 
 // /データを送信したか
@@ -44,7 +41,7 @@ const currentPath = ref("");
 
 const { getLoginUser, loginUser } = useGetLoginUser();
 
-const { records, compGetData, getRecords } = useGetRecords();
+const { records, compGetData, isLoaded, getRecords } = useGetRecords();
 
 watch(records, () => {
   let label = "";
@@ -141,8 +138,9 @@ onMounted(async () => {
   getHolidays();
   if (loginUser.value.id) {
     await getRecords(loginUser.value.id);
+  }else {
+    await getRecords(0);
   }
-  isLoaded.value = true;
 
   // getLoginUser()内でnextTickを実行
   authUser.value = loginUser;

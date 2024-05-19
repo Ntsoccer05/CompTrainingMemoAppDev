@@ -82,7 +82,10 @@ const sendEmail = async () => {
       dispErrorMsg.content = false;
       //バリデーションエラーメッセージのレイアウト
       const { dispEmailErrMsg, dispContentErrMsg } = dispValidationMsg(dispErrorMsg);
-      // alert("お問い合わせ内容を送信しました。");
+      // フォーム内容初期化
+      form.name = "";
+      form.email = "";
+      form.content = "";
     })
     .catch((err) => {
       btnEnabled.value = false;
