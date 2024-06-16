@@ -346,27 +346,48 @@ export default {
           recorded_at: recorded_day,
         })
         .then((res) => {
+	  store.commit("compGetData", false);	
           next();
         })
         .catch(() => {});
     };
 
+    const deleteOrMaintainRecordState = async (next) => {
+      if (records.value.length === 0) {
+        await deleteMenu(next);
+      } else if (records.value.length === 1 && !records.value[0].category) {
+        await deleteMenu(next);
+      } else {
+        store.commit("compGetData", false);
+        next();
+      }
+    };
+
     //遷移前処理
-    onBeforeRouteLeave((to, from, next) => {
-      store.commit("compGetData", false);
+    onBeforeRouteLeave(async(to, from, next) => {
       if (to.name === "home") {
-        if (records.value.length === 0) {
-          deleteMenu(next);
-        } else if (records.value.length === 1 && !records.value[0].category) {
-          deleteMenu(next);
+        if (compGetData.value === false) {
+            await getLoginUser();
+            if (route.params.recordId) {
+              await getRecords(loginUser.value.id, recorded_day).then(async (res) => {
+                await deleteOrMaintainRecordState(next);
+              });
+            } else if (loginUser.value.id) {
+              await getRecords(loginUser.value.id).then(async (res) => {
+                await deleteOrMaintainRecordState(next);
+              });
+            }
         } else {
-          next();
+          store.commit("compGetData", false);
+          await deleteOrMaintainRecordState(next);
         }
       } else if (to.name === "record") {
+	store.commit("compGetData", false);
         // レコード画面へ遷移時現在のスクロール位置を保存
         sessionStorage.setItem("OffsetTop", String(window.scrollY));
         next();
       } else {
+	store.commit("compGetData", false);
         next();
       }
     });
