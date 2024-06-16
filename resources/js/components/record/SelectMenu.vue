@@ -129,7 +129,7 @@ export default {
 
     const { getLatestRecordState, latestRecord } = useGetRecordState();
 
-    const { records, getRecords } = useGetRecords();
+    const { records, compGetData, getRecords } = useGetRecords();
 
     watch(records, () => {
       records.value.forEach((record) => {
