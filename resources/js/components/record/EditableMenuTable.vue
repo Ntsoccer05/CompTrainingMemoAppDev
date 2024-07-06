@@ -288,7 +288,6 @@ export default {
             content: menu.content,
           })
           .then((res) => {
-            console.log(res);
           })
           .catch((err) => {
             console.log(err);
@@ -306,7 +305,6 @@ export default {
             content: category.content,
           })
           .then((res) => {
-            console.log(res);
           })
           .catch((err) => {
             console.log(err);
