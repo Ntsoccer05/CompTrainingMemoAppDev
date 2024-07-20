@@ -2,7 +2,7 @@
   <p class="text-red-500 sm:text-center font-bold text-lg mb-5" v-if="loginUser.id">
       ※記録なし、セット数０のデータは毎朝４時に削除されます
   </p>
-  <template v-if="isLoaded">
+  <template v-if="isLoaded && compGetData">
     <form @submit.prevent="record">
       <button
         type="submit"
@@ -38,10 +38,15 @@ import useGetLoginUser from "../../composables/certification/useGetLoginUser.js"
 import useSelectedDay from "../../composables/record/useSelectedDay";
 import useGetRecords from "../../composables/record/useGetRecords";
 export default {
-  setup() {
+  props: {
+    compGetData: Boolean,
+  },
+  setup(props) {
     const date = new Date();
     const router = useRouter();
     const store = useStore();
+
+    const compGetData = computed(() => props.compGetData);
 
     const isLogined = ref(false);
     const dispAlertModal = ref(false);
@@ -100,6 +105,7 @@ export default {
     };
     return {
       recordingDay,
+      compGetData,
       dispAlertModal,
       loginUser,
       isLogined,

@@ -9,6 +9,8 @@ import useGetLoginUser from "../../composables/certification/useGetLoginUser.js"
 import useSelectedDay from "../../composables/record/useSelectedDay";
 import useGetRecords from "../../composables/record/useGetRecords";
 
+const emits = defineEmits(["compGetData"]);
+
 const router = useRouter();
 const route = useRoute();
 const authUser = ref([]);
@@ -141,6 +143,8 @@ onMounted(async () => {
   }else {
     await getRecords(0);
   }
+
+  emits("compGetData", true);
 
   // getLoginUser()内でnextTickを実行
   authUser.value = loginUser;

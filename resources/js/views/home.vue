@@ -1,7 +1,7 @@
 <template>
   <div class="h-full mt-8">
     <!-- トレーニング記録画面へ遷移 -->
-    <RecordToday />
+    <RecordToday :compGetData="compGetData" />
     <!-- TODO バーの種類をv-forで回す 内容はcategoryから取得 -->
     <div class="bar-kind w-full mt-2 mb-2">
       <div class="category-1 grid grid-cols-4 ml-10 md:ml-96 items-center mb-1">
@@ -10,11 +10,12 @@
       </div>
     </div>
     <!-- カレンダーコンポーネント -->
-    <Calendar />
+    <Calendar @compGetData="IsCompGetData" />
   </div>
 </template>
 
 <script>
+import { ref } from "vue";
 import { useStore } from "vuex";
 import Calendar from "../components/record/Calendar.vue";
 import RecordToday from "../components/record/RecordToday.vue";
@@ -25,8 +26,15 @@ export default {
   },
   setup() {
     const store = useStore();
+    const compGetData = ref(false);
     // 記録日を初期化
     store.commit("setRecordedAt", "");
+
+    const IsCompGetData = (e) => {
+      compGetData.value = e;
+    };
+
+    return {compGetData, IsCompGetData};
   },
 };
 </script>
