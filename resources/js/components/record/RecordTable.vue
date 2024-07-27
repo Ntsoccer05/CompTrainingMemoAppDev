@@ -563,7 +563,24 @@ export default {
         if (index > -1) {
           postRecordContent(index);
         }
-      }
+      } else if (activeElem.tagName === "TEXTAREA") {
+        if (activeElem) {
+          switch (activeElem.name) {
+            case "memo":
+              index =
+                Number(
+                  activeElem.parentElement.parentElement.firstElementChild.innerHTML.slice(
+                    0,
+                    1
+                  )
+                ) - 1;
+              break;
+          }
+          if (index > -1) {
+            postRecordContent(index);
+          }
+        }
+    }
       next();
     });
 
