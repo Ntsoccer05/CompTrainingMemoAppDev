@@ -92,6 +92,7 @@
           <div class="border">
             <textarea
               class="w-full leading-4 pl-0.5"
+	      name="memo"
               v-model="memo[index]"
               cols="20"
               rows="4"
@@ -563,7 +564,24 @@ export default {
         if (index > -1) {
           postRecordContent(index);
         }
-      }
+      } else if (activeElem.tagName === "TEXTAREA") {
+        if (activeElem) {
+          switch (activeElem.name) {
+            case "memo":
+              index =
+                Number(
+                  activeElem.parentElement.parentElement.firstElementChild.innerHTML.slice(
+                    0,
+                    1
+                  )
+                ) - 1;
+              break;
+          }
+          if (index > -1) {
+            postRecordContent(index);
+          }
+        }
+    }
       next();
     });
 
