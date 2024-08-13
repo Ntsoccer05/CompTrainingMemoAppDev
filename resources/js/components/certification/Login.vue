@@ -1,7 +1,7 @@
 <template>
   <form @submit.prevent="login">
     <!-- UserName input -->
-    <div class="relative mb-6">
+    <!-- <div class="relative mb-6">
       <input
         type="text"
         class="peer block min-h-[auto] w-full rounded border bg-transparent px-3 py-[0.32rem] leading-[2.15] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-600 dark:placeholder:text-neutral-600 dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
@@ -15,7 +15,7 @@
         >ユーザ名
       </label>
       <p :class="dispNameErrMsg">{{ errors.name[0] }}</p>
-    </div>
+    </div> -->
 
     <!-- Email input -->
     <div class="relative mb-6">
@@ -123,7 +123,7 @@ export default {
           axios
             .post("/api/login", {
               // バリデーションをLoginRequest.phpで行っているため、オブジェクト名を合わせる必要がある。
-              name: name.value,
+              // name: name.value,
               email: email.value,
               password: password.value,
             })

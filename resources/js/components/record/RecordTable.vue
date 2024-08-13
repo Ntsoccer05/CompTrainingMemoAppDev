@@ -92,6 +92,7 @@
           <div class="border">
             <textarea
               class="w-full leading-4 pl-0.5"
+	      name="memo"
               v-model="memo[index]"
               cols="20"
               rows="4"
