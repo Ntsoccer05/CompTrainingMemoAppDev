@@ -84,6 +84,7 @@
                   placeholder="メモ"
                   :value="historyRecord.memo"
                   disabled
+		  ref="historyMemo"
                 ></textarea>
               </div>
             </td>
@@ -108,12 +109,38 @@ const props = defineProps({
   hasOneHand: Boolean,
 });
 
+const historyMemo = ref(null);
+
 const historyMenus = computed(() => props.historyMenus);
 const historyRecords = computed(() => props.historyRecords);
 const hasHistoryRecord = computed(() => props.hasHistoryRecord);
 const hasOneHand = computed(() => props.hasOneHand);
 
+// 高さを調整する関数
+const adjustHeight = (element) => {
+  // 内容を改行文字で分割して行数をカウント
+  const textLines = element.value.split("\n").length;
+  const lineHeight = 1;
+
+  const rows = Number(element.getAttribute("rows"));
+
+  const newHeight = lineHeight * textLines;
+
+  element.style.height = `${newHeight}rem`; // スクロールの高さに基づいて高さを設定
+};
+onMounted(() => {
+  historyMemo.value &&
+    historyMemo.value.forEach((elm) => {
+      elm.value !== "" && adjustHeight(elm);
+    });
+});
+
 </script>
 
-<style></style>
+<style scoped>
+textarea {
+  resize: none;
+  overflow: hidden;
+}
+</style>
 
